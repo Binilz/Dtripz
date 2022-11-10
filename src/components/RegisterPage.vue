@@ -84,6 +84,20 @@
                                 @click:append="passwordShow = !passwordShow"
                               />
                               <v-text-field
+                              label="Confirm Password"
+                              name="password"
+                              placeholder="Confirm Password"
+                              v-model="password"
+                              :rules="passwordRules" 
+                              outlined
+                              dense
+                              color="purple"                             
+                              prepend-inner-icon="mdi-lock-outline"
+                              :type="passwordShow ? 'text' : 'password'"
+                              :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
+                              @click:append="passwordShow = !passwordShow"
+                            />
+                              <v-text-field
                                 label="Phone Number"
                                 name="phonenumber"
                                 placeholder="PhoneNumber"
