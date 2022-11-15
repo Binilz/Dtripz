@@ -1,5 +1,5 @@
 <template>
-  <v-img max-height="580" src="https://cdn.pixabay.com/photo/2016/10/29/10/12/purple-1780371__340.png">
+  <v-img max-height="580" src="https://media.istockphoto.com/id/1354549036/photo/dark-purple-background.jpg?b=1&s=170667a&w=0&k=20&c=wWkY1njwgpHL0A5H39l1MWG5urM2UrOxHLAQaxZKFuA=">
 
   
   <v-row>
@@ -29,22 +29,42 @@
 <script>
 import HotelTab from '../components/tabs/HotelTab.vue';
 import FlightTab from '../components/tabs/FlightTab.vue';
-
+import axios from 'axios'
 export default{
   components: {HotelTab,FlightTab},
  data : () => ({
     activeTab: 'tab-1',
     
  }),
+ mounted() {
+       this.hotel();
+     },
  methods: {
   setActive(tab){
     this.activeTab = tab
   },
   isActive(tab){
     return this.activeTab === tab;
-  }
+  },
+  hotel() {       
+          axios.post('http://192.168.1.46:8990/api/hotels/search', {
+               
+
+              }).then((response)=>{
+                if(response.status===200){
+                console.log(response.status);
+                console.log(response.data);
+                // this.$router.push('/login')
+                }
+              }).catch((error)=>{
+                console.log('Hotel error');
+                console.log(error.response);
+              });             
+        }, 
  },
  
+     
+   
   //  handleChange(choice) {
   //       const matchingCountry = this.countryDetails.find(details => details.country === choice);
   //       this.selectedCountryCapital = matchingCountry ? matchingCountry.capital : null;

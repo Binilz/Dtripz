@@ -4,6 +4,7 @@ import HomeView from '../views/HomeView.vue'
 import LogIn from '../components/LogIn'
 import FacebookGoogle from '../components/FacebookGoogle'
 import RegisterPage from '../components/RegisterPage'
+import HotelsList from '../components/HotelsList'
 
 Vue.use(VueRouter)
 
@@ -35,6 +36,11 @@ const routes = [
     path: '/facebookgoogle',
     name: 'facebookgoogle',
     component: FacebookGoogle
+  },
+  {
+    path: '/hotelslist',
+    name: 'hotelslist',
+    component: HotelsList
   },
 ]
 
