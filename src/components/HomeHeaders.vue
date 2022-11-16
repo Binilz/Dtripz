@@ -47,7 +47,7 @@ items: [
         { title: 'Welcome',},
         { title: 'Flights', },
         { title: 'Hotels', },
-        { title: 'About Us', }
+        { title: 'About Us', to:"/profilepage"}
       ],
 })
 }
