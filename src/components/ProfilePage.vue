@@ -30,10 +30,8 @@
   <v-container>
     <v-row dense>
       <v-col cols="12">
-        <v-card
-         
-         
-        >
+        
+        <v-card >
           <v-card-title class="text-h4" >
            Profile
           </v-card-title>
@@ -54,11 +52,103 @@
           label="Marital Status"></v-text-field>
 
           <v-card-actions>
-            <v-btn >
+            <div class="text-center">
+              <v-dialog
+                v-model="dialog"
+                width="500"
+              >
+                <template v-slot:activator="{ on, attrs }">
+            <v-btn   
+            color="purple"
+            dark
+            v-bind="attrs"
+            v-on="on">
               Edit
+            </v-btn>
+          </template>
+
+        </v-dialog>
+      </div>
+          </v-card-actions>
+        </v-card>
+
+        <v-dialog
+        v-model="dialog"
+        persistent
+        max-width="600px"
+      >
+        <v-card>
+          <v-card-title>
+            <span class="text-h5">Edit Profile</span>
+          </v-card-title>
+          <v-card-text>
+            
+              <v-row>
+                <v-col
+                cols="12"
+                sm="6"
+                md="4"
+                >
+                  <v-text-field
+                    label="Name"
+                    v-model="firstName"
+                    
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
+                  <v-text-field
+                    label="Gender"
+                    v-model="surName"
+                    
+                  ></v-text-field>
+                </v-col>
+                </v-row>
+               
+               <v-row>
+                <v-col
+                cols="12"
+                sm="6"
+                md="4"
+              >
+                <v-text-field
+                  label="Birthday"
+                  v-model="houseName"
+                  
+                ></v-text-field>
+              </v-col>
+              <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
+                  <v-text-field
+                    label="Marital Status"
+                    v-model="wardName"
+                    
+                  ></v-text-field>
+                </v-col>
+               </v-row>
+         
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="green darken-1"
+              text
+              @click="dialog = false"
+            >
+              Save
             </v-btn>
           </v-card-actions>
         </v-card>
+      </v-dialog>
+    
+    
+
         <br>
       <br>
    
@@ -81,12 +171,27 @@
           label="Email"></v-text-field>
       <v-text-field class="ml-6 mr-6"
           
-          label="Password"></v-text-field>
+          label="Password"
+          
+          ></v-text-field>
 
           <v-card-actions>
-            <v-btn >
-              Edit
+           
+              <div class="text-center">
+                <v-dialog
+                  v-model="dialog"
+                  width="500"
+                >
+                  <template v-slot:activator="{ on, attrs }">
+            <v-btn color="purple"
+            dark
+            v-bind="attrs"
+            v-on="on">
+              Change Password
             </v-btn>
+          </template>
+        </v-dialog>
+        </div>
           </v-card-actions>
         </v-card>
       </v-col>
@@ -104,7 +209,7 @@ import HomeHeaders from './HomeHeaders.vue'
 
 export default {
   data: () => ({
-      
+    dialog: false,
     }),
  components:{
   HomeHeaders
