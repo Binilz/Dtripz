@@ -23,7 +23,7 @@ export default{
     
     
    
-    setup() {
+    mounted() {
         const user = ref(null);
         const email = ref(null);
         const image = ref(null);
