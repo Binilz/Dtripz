@@ -28,7 +28,9 @@
 
   <v-row>
   <v-container>
+  
     <v-row dense>
+    
       <v-col cols="12">
         
         <v-card >
@@ -37,20 +39,32 @@
           </v-card-title>
 
           <v-card-subtitle>Basic info, for a faster booking experience</v-card-subtitle>
-          <v-text-field class="ml-6 mr-6"
+        <div class="ml-6 mr-6 ">
+          <p>
+            Name:
+            <strong>{{user.displayName}}</strong>
+            <br>
           
-          label="Name"></v-text-field>
-      <v-text-field class="ml-6 mr-6"
-          
-          label="Birthday"></v-text-field>
-      <v-text-field class="ml-6 mr-6"
-          
-          label="Gender"></v-text-field>
+            <br />Email:
+            <strong>{{user.email}}</strong>
 
-          <v-text-field class="ml-6 mr-6"
+            <br>
           
-          label="Marital Status"></v-text-field>
-
+            <br />Birthday:
+            <strong></strong>
+            <br>
+            <br>
+            Gender:
+            <strong></strong>
+            <br>
+          
+            <br />Marital Status:
+            <strong></strong></p>
+         
+         
+          </div>      
+         
+      
           <v-card-actions>
             <div class="text-center">
               <v-dialog
@@ -91,7 +105,7 @@
                 >
                   <v-text-field
                     label="Name"
-                    v-model="firstName"
+                    
                     
                   ></v-text-field>
                 </v-col>
@@ -102,7 +116,7 @@
                 >
                   <v-text-field
                     label="Gender"
-                    v-model="surName"
+                    
                     
                   ></v-text-field>
                 </v-col>
@@ -116,7 +130,7 @@
               >
                 <v-text-field
                   label="Birthday"
-                  v-model="houseName"
+                  
                   
                 ></v-text-field>
               </v-col>
@@ -127,7 +141,7 @@
                 >
                   <v-text-field
                     label="Marital Status"
-                    v-model="wardName"
+                    
                     
                   ></v-text-field>
                 </v-col>
@@ -183,7 +197,7 @@
                   width="500"
                 >
                   <template v-slot:activator="{ on, attrs }">
-            <v-btn color="purple"
+            <v-btn  color="purple"
             dark
             v-bind="attrs"
             v-on="on">
@@ -206,13 +220,32 @@
 
 <script>
 import HomeHeaders from './HomeHeaders.vue'
+import firebase from 'firebase/compat/app';
+
 
 export default {
   data: () => ({
+    user:null,
     dialog: false,
     }),
+    created() {
+       firebase.auth().onAuthStateChanged(user => {
+           if (user) {
+               this.user = user;
+           }
+       });
+   },
  components:{
   HomeHeaders
+ },
+ methods:{
+  created() {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.user = user;
+            }
+        });
+    }
  }
 }
 </script>
