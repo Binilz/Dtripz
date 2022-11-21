@@ -5,17 +5,17 @@
   <home-headers/>
   <br>
   <v-row>
-    <v-col cols="10" sm="2" class="ml-6">
+    <v-col cols="14" sm="2" class="ml-8 mt-7" >
       <v-card
-    height="300"
+    height="570"
     width="260"
     class="ml-16"
   >
  
-    <v-img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png" height="230"
-    width="200" class="mx-auto"></v-img>
+  <v-img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png" 
+  ></v-img>
 
-    <v-navigation-drawer >
+    
       <v-list-item>
         <v-list-item-content>
           <v-list-item-title class="text-h6">
@@ -47,7 +47,7 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>
+    
   </v-card>
     </v-col>
     <!-- <v-col align="center" justify="center">
@@ -78,7 +78,7 @@
   
     <v-row dense>
     
-      <v-col cols="10" sm="8" class="ml-16">
+      <v-col cols="10" sm="8" class="ml-16 mt-10">
         
         <v-card >
   
@@ -148,8 +148,7 @@
    <v-divider></v-divider>
   </p>
           </div>      
-         
-          
+             
         </v-card>
 
         <v-dialog
