@@ -6,6 +6,7 @@ import FacebookGoogle from '../components/FacebookGoogle'
 import RegisterPage from '../components/RegisterPage'
 import HotelsList from '../components/HotelsList'
 import ProfilePage from '../components/ProfilePage'
+import ProPic from '../components/ProPic'
 
 Vue.use(VueRouter)
 
@@ -47,6 +48,11 @@ const routes = [
     path: '/profilepage',
     name: 'profilepage',
     component: ProfilePage
+  },
+  {
+    path: '/propic',
+    name: 'propic',
+    component: ProPic
   },
 ]
 

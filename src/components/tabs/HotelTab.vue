@@ -69,7 +69,7 @@
             </template>
             <v-date-picker
               v-model="date2"
-              :min="nowDate"
+              :min="date1"
               @input="checkout = false"
             ></v-date-picker>
           </v-menu>
