@@ -62,14 +62,14 @@ export default{
                 console.log(response.status);
                 console.log(response.data);
                 console.log('googlelogin')
-              
+                // this.$router.push("/");
                   }).catch((error)=>{                     
                 console.log(error);
                  }); 
                 }else{
                     console('login again')
                  }
-               
+                 
                 return false;
             },
             // uiShown: function() {

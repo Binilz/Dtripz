@@ -43,94 +43,97 @@
                         
                         <v-row align="center" justify="center">
                           <v-col cols="12" sm="8">
-                            <form @submit.prevent=" register" >
-                              
+                            <v-form @submit.prevent="register" ref="form" v-model="form">
                               <v-text-field
-                                label="Username"
-                                name="username"
-                                placeholder="Username"
-                                v-model="username"
-                                outlined
-                                dense
-                                color="purple"
-                                autocomplete="false"
-                                class="mt-16"
-                                prepend-inner-icon="mdi-account"
-                              />
-                              <v-text-field
-                                label="Email"
-                                name="email"
-                                placeholder="Email"
-                                v-model="email"
-                                :rules="emailRules" 
-                                outlined
-                                dense
-                                color="purple"
-                                autocomplete="false"                              
-                                prepend-inner-icon="mdi-email"
-                              />
-                              <v-text-field
-                                label="Password"
-                                name="password"
-                                placeholder="Password"
-                                v-model="password"
-                                :rules="passwordRules" 
-                                outlined
-                                dense
-                                color="purple"                             
-                                prepend-inner-icon="mdi-lock-outline"
-                                :type="passwordShow ? 'text' : 'password'"
-                                :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
-                                @click:append="passwordShow = !passwordShow"
-                              />
-                              <v-text-field
-                              label="Confirm Password"
-                              name="password"
-                              placeholder="Confirm Password"
-                              v-model="password"
-                              :rules="passwordRules" 
+                              label="Name"
+                              type="text"
+                              placeholder="Name"
+                              v-model="name"
+                              :rules="[rules.required]"
                               outlined
                               dense
-                              color="purple"                             
+                              color="purple"
+                              autocomplete="false"
+                              class="mt-16"
+                              prepend-inner-icon="mdi-account"
+                            />  
+                            <v-text-field
+                              label="Email"
+                             
+                              placeholder="Email"
+                              v-model="email"
+                              :rules="emailRules" 
+                              outlined
+                              dense
+                              color="purple"
+                              autocomplete="false"
+                              
+                              prepend-inner-icon="mdi-email"
+                            />                 
+                            <v-text-field
+                              label="Password"
+                              
+                              placeholder="Password"
+                              v-model="password"
+                              :rules="[rules.password, rules.length(6)]" 
+                              outlined
+                              dense
+                              color="purple"                              
                               prepend-inner-icon="mdi-lock-outline"
                               :type="passwordShow ? 'text' : 'password'"
                               :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
                               @click:append="passwordShow = !passwordShow"
                             />
-                              <v-text-field
-                                label="Phone Number"
-                                name="phonenumber"
-                                placeholder="PhoneNumber"
-                                v-model="phonenumber"                             
-                                outlined
-                                dense
-                                color="purple"
-                                type="phonenumber"
-                                prepend-inner-icon="mdi-phone"
+                            <v-text-field
+                              label="Confirm Password"
+                          
+                              placeholder="Confirm Password"
+                              v-model="password2"
+                              :rules="PasswordRules2.concat(validatePassword2)"
+                              outlined
+                              dense
+                              color="purple"                              
+                              prepend-inner-icon="mdi-lock-outline"
+                              :type="passwordShow ? 'text' : 'password'"
+                              :append-icon="passwordShow ? 'mdi-eye' : 'mdi-eye-off'"
+                              @click:append="passwordShow = !passwordShow"
                             />
-                            
+                            <!-- <v-text-field
+                            label="Phone Number"
+                            placeholder="Phone Number"
+                            v-model="phone"
+                    
+                            outlined
+                            dense
+                            color="purple"                              
+                            prepend-inner-icon="mdi-phone"
+                        
+                          /> -->
+                          <v-checkbox
+                              v-model="agreement"
+                              :rules="[rules.required]"
+                              color="#92278f"
+                          >
+                              <template v-slot:label>
+                              I agree to the&nbsp;
+                              <router-link to="/terms" class="purple--text ml-3" icon>Terms and Conditions</router-link>
+                              &nbsp;and&nbsp;
+                              <router-link to="/privacy" class="purple--text ml-3" icon>Privacy Policy</router-link>*
+                              </template>
+                          </v-checkbox> 
                               <v-btn
-                               id="register"
+                              :disabled="!form"
+                              :loading="isLoading"
                                 type="submit"
+                                id="register"
                                 color="purple"
-                                dark
-                                block
-                                tile
+                                depressed block tile
                               >Register</v-btn
                               >
                               <br>
                               
-                               <v-row>
-                                <v-col cols="12" sm="7">
-                                  <v-checkbox
-                                    label="Terms & Condition"
-                                    class="mt-n1"
-                                    color="#3e154e"
-                                  > </v-checkbox>
-                                </v-col>                           
-                              </v-row>
-                             
-                            </form>
+                            
+                            </v-form>
                           </v-col>
                         </v-row>
                        
@@ -157,16 +160,18 @@
         username: '',
         phonenumber: '',
         password: '',
+        password2: '',
         passwordShow: false,
-        passwordRules: [
-          v => !!v || 'Password is required',
-          v => (v && v.length >= 8) || 'Password must be more than 8 characters',
-        ],
+        form: false,
         email: '',
-        emailRules: [
-          v => !!v || 'E-mail is required',
-          v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
-        ], 
+        PasswordRules2: [ v => !!v || "Password incorrect" ],
+        rules: {
+        email: v => !!(v || '').match(/@/) || 'Please enter a valid email',
+        length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
+        password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
+          'Password must contain an upper case letter, a numeric character, and a special character',
+        required: v => !!v || 'This field is required',
+      },
   // dialog:false,
       } ;
   
@@ -177,7 +182,7 @@
     },
     methods: {
       register() {       
-          axios.post('http://192.168.1.39:8991/api/auth/signup', {
+          axios.post('http://192.168.1.46:8991/api/auth/signup', {
                    "name": this.username,
                     "password": this.password,
                     "email": this.email,

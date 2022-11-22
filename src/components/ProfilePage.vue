@@ -4,6 +4,7 @@
  <div>
   <home-headers/>
   <br>
+  <div class="">
   <v-row>
     <v-col cols="14" sm="2" class="ml-8 mt-7" >
       <v-card
@@ -266,6 +267,7 @@
 </v-card>
 </v-col>
 </v-row>
+</div>
  </div>
  <!-- </v-img> -->
 </template>

@@ -32,6 +32,7 @@
   <v-icon>mdi-magnify</v-icon>
 </v-btn>
 <v-btn outlined color="white"><router-link to="/login" style="text-decoration :none" class="white--text">Sign In or Register</router-link></v-btn>
+<v-btn @click="logout">Logout</v-btn>
 </v-list>
 
 
@@ -49,7 +50,14 @@ items: [
         { title: 'Hotels', },
         { title: 'About Us', to:"/profilepage"}
       ],
-})
+}),
+methods: {
+  logout()
+  {
+    localStorage.clear();
+    this.$router.push({name:'login'})
+  }
+}
 }
 </script>
 
