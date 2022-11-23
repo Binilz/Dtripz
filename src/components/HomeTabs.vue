@@ -1,9 +1,19 @@
 <template>
-  <v-img max-height="580" src="https://media.istockphoto.com/id/1354549036/photo/dark-purple-background.jpg?b=1&s=170667a&w=0&k=20&c=wWkY1njwgpHL0A5H39l1MWG5urM2UrOxHLAQaxZKFuA=">
+  <v-img max-height="580" src="https://cdn.wallpapersafari.com/53/10/YeGEIJ.jpg">
+
+  <div class="gray">
+    
+    <div class="helloo">
+       
+   
+    </div>
+    
+  </div>
 
   
   <v-row>
-    <div class="tabs mt-10">
+    
+    <div class="tabs mt-1">
       <div class="nav-tabs">
         <div class="nav-item" @click="setActive('tab-1')" :class="{ 'active' : isActive('tab-1') }">
           <v-icon color="white">mdi-home-city</v-icon>Hotels
@@ -22,6 +32,7 @@
         </div>
     </div>
     </div>
+   
   </v-row>
 </v-img>
 </template>
@@ -75,15 +86,39 @@ export default{
 </script>
 
 <style>
+
+.gray {
+  background-color: #3e154e;
+  z-index: -1;
+  height: auto;
+  width: 2000px;
+  position: absolute;
+  overflow: hidden;
+}
+
+.helloo {
+  background-color: #3e154e;
+  top: 0;
+  height: 250px;
+  width: 2000px;
+  z-index: 1;
+  position: relative;
+  float:left;
+  margin-left: 30px;
+  margin-top: 10px;
+}
 .tabs{
   width:1700px;
   margin: 0 auto;
-  color:"#3e154e"
+  color:"#3e154e";
+  
+
 }
 .nav-tabs{
   display: flex;
   width: 300px;
   
+
 }
 .nav-item{
   color: purple;
