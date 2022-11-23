@@ -4,7 +4,7 @@
  <div>
   <home-headers/>
   <br>
-  <div class="">
+ 
   <v-row>
     <v-col cols="14" sm="2" class="ml-8 mt-7" >
       <v-card
@@ -224,51 +224,16 @@
     
    
       </v-col>
-      <v-col cols="10" sm="8" class="ml-16">
-        <v-card
-        
-        >
-          <v-card-title class="text-h4">
-            Login Details
-          </v-card-title>
-
-          <v-card-subtitle>Manage your email address mobile number and password</v-card-subtitle>
-          <div class="ml-6 mr-6 ">
-          <p>
-            Mobile Number &nbsp;:
-            <strong></strong>
-            <br>
-            <br>
-            <v-divider></v-divider>
-           
-          
-            <br />Email  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp;  &nbsp; &nbsp; :
-            <strong>{{user.email}}</strong>
-            <br>
-            <br>
-            <v-divider></v-divider>
-
-            <br />Password &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp; :
-            <strong>********</strong>
-            <br>
-            <br>
-            <v-divider></v-divider>
-                   
-</p>
-</div>
-
-        </v-card>
-      </v-col>
+    
    
       
     </v-row>
   </v-container>
   </v-row>
-</v-card>
-</v-col>
+
 </v-row>
 </div>
- </div>
+
  <!-- </v-img> -->
 </template>
 

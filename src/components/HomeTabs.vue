@@ -76,13 +76,13 @@ export default{
 
 <style>
 .tabs{
-  width:900px;
+  width:1700px;
   margin: 0 auto;
   color:"#3e154e"
 }
 .nav-tabs{
   display: flex;
-  width: 700px;
+  width: 300px;
   
 }
 .nav-item{
@@ -101,7 +101,7 @@ export default{
 }
 
 .tab-content{
-  background-color: rgba(225, 225, 225, 0.183);
+ 
   padding:20px;
   
 }
@@ -112,7 +112,7 @@ export default{
 
 .active{
   color: white;
-  background-color: rgba(225, 225, 225, 0.183);;
+
   
 }
 .tab-pane{
