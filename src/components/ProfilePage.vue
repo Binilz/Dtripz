@@ -5,14 +5,13 @@
   <home-headers/>
   <br>
  
-  <v-row>
-    <v-col cols="14" sm="2" class="ml-8 mt-7" >
+  <v-row class="ma-10">
+    <div class="sm-1 ml-16">
+    <v-col  >
       <v-card
     height="570"
     width="260"
-    class="ml-16"
   >
- 
   <v-img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png" 
   ></v-img>
 
@@ -51,37 +50,12 @@
     
   </v-card>
     </v-col>
-    <!-- <v-col align="center" justify="center">
-  <v-card class="mr-12" max-width="1000" flat>
-    <v-img height="200" src="https://htmlcolorcodes.com/assets/images/colors/purple-color-solid-background-1920x1080.png"></v-img>
-    <v-row style="margin:2.5%;position:absolute; top: 130px">
 
-                <v-list-item>
-                 <v-list-item-avatar size="125">
-                    <img
-                      src="https://www.w3schools.com/howto/img_avatar.png"
-                      alt="John"
-                    >
-                  </v-list-item-avatar>
-                  <v-list-item-content>
-                    <v-list-item-title class="text-h4" style="margin-top:20px;">User</v-list-item-title>
-                    <v-list-item-subtitle>Traveller</v-list-item-subtitle>
-                  </v-list-item-content>
-                </v-list-item>
-  </v-row>
-  <br>
-<br>
-<br> -->
-
-
-  <v-row>
-  <v-container >
-  
-    <v-row dense>
-    
-      <v-col cols="10" sm="8" class="ml-16 mt-10">
+  </div>
+  <div class=" ml-1"></div>
+      <v-col >
         
-        <v-card >
+        <v-card class="mr-14">
   
           <v-card-title class="text-h4" >
            Profile <v-spacer></v-spacer> <v-card-actions>
@@ -228,10 +202,9 @@
    
       
     </v-row>
-  </v-container>
-  </v-row>
 
-</v-row>
+
+
 </div>
 
  <!-- </v-img> -->
