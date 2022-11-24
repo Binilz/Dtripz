@@ -1,6 +1,6 @@
 <template>
-   <!-- <v-img src="https://media.istockphoto.com/photos/purple-defocused-blurred-motion-abstract-background-picture-id1273929462?b=1&k=20&m=1273929462&s=170667a&w=0&h=Yldyj7IZlkZSFHf3kgp4T2OV2HAYNRX1Kw8W4RAqPlQ=">
-     -->
+   <v-img src="https://img.freepik.com/free-vector/elegant-white-background-with-shiny-lines_1017-17580.jpg?w=2000">
+    
  <div>
   <home-headers/>
   <br>
@@ -9,14 +9,16 @@
     <div class="sm-1 ml-16">
     <v-col  >
       <v-card
-    height="570"
+    height="300"
     width="260"
-  >
-  <v-img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460__480.png" 
-  ></v-img>
-
-    
+    elevation="5">
+ 
       <v-list-item>
+     <!-- <v-list-item-avatar>
+            <v-img :src="user.photoURL"></v-img>
+            </v-list-item-avatar>
+            </v-list-item> -->
+            
         <v-list-item-content>
           <v-list-item-title class="text-h6">
             {{user.displayName}}
@@ -52,10 +54,10 @@
     </v-col>
 
   </div>
-  <div class=" ml-1"></div>
+  
       <v-col >
-        
-        <v-card class="mr-14">
+        <div class="mr-14">
+        <v-card class=" rounded-xl" elevation="5">
   
           <v-card-title class="text-h4" >
            Profile <v-spacer></v-spacer> <v-card-actions>
@@ -120,11 +122,13 @@
    <strong></strong>
    <br>
    <br>
+   <br>
    <v-divider></v-divider>
   </p>
           </div>      
              
         </v-card>
+        </div>
 
         <v-dialog
         v-model="dialog"
@@ -207,7 +211,7 @@
 
 </div>
 
- <!-- </v-img> -->
+ </v-img>
 </template>
 
 <script>

@@ -139,8 +139,8 @@
         >
           <v-btn 
           color="#92278f" 
-          dark>
-         <router-link to="/hotelslist" disabled>
+          dark >
+         <router-link  style="text-decoration: none; color: inherit;" to="/hotelslist"  >
             <v-icon>mdi-magnify</v-icon>Search</router-link></v-btn>
           </v-col>
     </v-row>
