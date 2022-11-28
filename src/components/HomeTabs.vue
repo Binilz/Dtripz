@@ -2,26 +2,24 @@
   <v-img max-height="580" src="https://cdn.wallpapersafari.com/53/10/YeGEIJ.jpg">
 
   <div class="gray">
-    
     <div class="helloo">
-       
-   
-    </div>
-    
+    </div>   
   </div>
 
   
   <v-row>
     
     <div class="tabs mt-1">
+     <div class="border">
       <div class="nav-tabs">
         <div class="nav-item" @click="setActive('tab-1')" :class="{ 'active' : isActive('tab-1') }">
-          <v-icon color="white">mdi-home-city</v-icon>Hotels
+          <v-icon color="purple">mdi-home-city</v-icon>Hotels
       </div>
       <div class="nav-item"  @click="setActive('tab-2')" :class="{ 'active' : isActive('tab-2') }">
-        <v-icon color="white">mdi-airplane</v-icon>Flights
+        <v-icon color="purple">mdi-airplane</v-icon>Flights
       </div>
       
+    </div>
     </div>
     <div class="tab-content">
       <div class="tab-pane" v-show="isActive('tab-1')">
@@ -87,6 +85,7 @@ export default{
 
 <style>
 
+
 .gray {
   background-color: #3e154e;
   z-index: -1;
@@ -100,13 +99,14 @@ export default{
   background-color: #3e154e;
   top: 0;
   height: 250px;
-  width: 2000px;
-  z-index: 1;
+  width: 3000px;
+  
   position: relative;
   float:left;
   margin-left: 30px;
   margin-top: 10px;
 }
+
 .tabs{
   width:1700px;
   margin: 0 auto;
@@ -117,15 +117,15 @@ export default{
 .nav-tabs{
   display: flex;
   width: 300px;
+  margin: 0 auto;
   
-
 }
 .nav-item{
   color: purple;
   transition: all 150ms;
   cursor: pointer;
-  height: 112px;
-  width: 31.5%;
+  height: 100px;
+  width: 150px;
   font-weight: 500;
   display: flex;
   justify-content: center;
@@ -133,11 +133,12 @@ export default{
   flex-direction: column;
   border-top-left-radius: 6px;
   border-top-right-radius: 6px;
+  
 }
 
 .tab-content{
- 
-  padding:20px;
+  border: solid 3px rgb(200, 53, 205);
+  border-radius: 10px;
   
 }
 .for-example h2{

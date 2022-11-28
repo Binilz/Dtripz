@@ -9,7 +9,7 @@
     <div class="sm-1 ml-16">
     <v-col  >
       <v-card
-    height="300"
+    height="350"
     width="260"
     elevation="5">
  
@@ -60,7 +60,7 @@
         <v-card class=" rounded-xl" elevation="5">
   
           <v-card-title class="text-h4" >
-           Profile <v-spacer></v-spacer> <v-card-actions>
+          <strong>Profile </strong> <v-spacer></v-spacer> <v-card-actions>
             <div class="text-">
               <v-dialog
                 v-model="dialog"
@@ -224,11 +224,11 @@ export default {
     user:null,
     dialog: false,
     items: [
-          { title: 'Profile', icon: 'mdi-account' },
+          { title: 'Profile', icon: 'mdi-account', to: "/profilepage" },
           { title: 'Login Details', icon: 'mdi-login' },
           { title: 'Payments', icon: 'mdi-account-credit-card' },
          { title: 'Settings', icon: 'mdi-account-cog' },
-          { title: 'Logout', icon: 'mdi-logout' },
+          { title: 'Logout', icon: 'mdi-logout' , to: "/login"},
         ],
         gender: ['Male','Female'],
         marital: ['Single','Married'],
