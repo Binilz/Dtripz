@@ -1,6 +1,6 @@
 <template>
     <div>
-    <form>
+    <v-form>
     <v-container>
       <v-row>
             <v-col
@@ -12,6 +12,7 @@
           <v-text-field
             label="Select destination"
             outlined
+            color="purple"
           ></v-text-field>
           </v-col>
           <v-col
@@ -26,6 +27,7 @@
             transition="scale-transition"
             offset-y
             min-width="auto"
+            color="purple"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
@@ -35,12 +37,14 @@
                 outlined
                 v-bind="attrs"
                 v-on="on"
+                color="purple"
               ></v-text-field>
             </template>
             <v-date-picker
               v-model="date1"
               :min="nowDate"
               @input="checkin = false"
+              color="purple"
             ></v-date-picker>
           </v-menu>
         </v-col>
@@ -56,6 +60,7 @@
             transition="scale-transition"
             offset-y
             min-width="auto"
+            color="purple"
           >
             <template v-slot:activator="{ on, attrs }">
               <v-text-field
@@ -65,12 +70,14 @@
                 outlined
                 v-bind="attrs"
                 v-on="on"
+                color="purple"
               ></v-text-field>
             </template>
             <v-date-picker
               v-model="date2"
               :min="date1"
               @input="checkout = false"
+              color="purple"
             ></v-date-picker>
           </v-menu>
         </v-col>
@@ -78,10 +85,10 @@
             cols="12"
             sm="6" md="4"
           >
-          <v-dialog
-          v-model="dialog"
-          width="500"
-        >
+          <v-menu
+            v-model="dialog"
+            ref="menu" offset-y :close-on-content-click="false"
+          >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field color="purple"
             placeholder="Travellers"
@@ -91,30 +98,45 @@
             v-on="on"
           ></v-text-field>
           </template>
-          <v-card>
-            
+          <v-card class="mx-auto" width="344">
+            <div>
+              <v-card-title class="text-h5">
+              Rooms &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+              <v-btn class="control-button" @click="decrease">-</v-btn>
+              &nbsp; {{ Room }} &nbsp;
+              <v-btn class="control-button" @click="increase">+</v-btn>
+            </v-card-title><v-divider></v-divider>
+          </div> 
+          <div v-for="(key, index) in items" :key="index" >
             <v-card-title class="text-h5">
-              Adults &nbsp;<h6 class="text-center grey--text">(+12yrs)</h6> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;: &nbsp; &nbsp; &nbsp;
-              <v-btn class="control-button" @click="decreaseAdult">-</v-btn>
-              &nbsp; {{ Adult }} &nbsp;
-              <v-btn class="control-button" @click="increaseAdult">+</v-btn>
-            </v-card-title>
-          
+            Adults &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <v-btn class="control-button" @click="decreaseAdult(index)">-</v-btn>
+            &nbsp; {{ key.NoOfAdults }} &nbsp;
+            <v-btn class="control-button" @click="increaseAdult(index)">+</v-btn>
+          </v-card-title><v-divider></v-divider>
 
-            <!-- :disabled="!Child ? 'true': undefined" -->
-            <v-card-title class="text-h5">
-              Childern &nbsp;<h6 class="text-center grey--text">(2-12yrs)</h6>  : &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
-              <v-btn class="control-button" @click="decreaseChild">-</v-btn>
-              &nbsp; {{ Child }} &nbsp;
-              <v-btn class="control-button" @click="increaseChild">+</v-btn>
-            </v-card-title>
+          <v-card-title class="text-h5">
+            Child &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <v-btn class="control-button" @click="decreaseChild(index)">-</v-btn>
+            &nbsp; {{ key.NoOfChild }} &nbsp;
+            <v-btn class="control-button" @click="increaseChild(index)">+</v-btn>
        
-            <v-card-title class="text-h5">
-              Infants &nbsp;<h6 class="text-center grey--text">(0-2yrs)</h6> &nbsp;&nbsp;&nbsp; :&nbsp; &nbsp; &nbsp;&nbsp; 
-              <v-btn class="control-button" @click="decreaseInfant">-</v-btn>
-              &nbsp; {{ Infant }} &nbsp;
-              <v-btn class="control-button" @click="increaseInfant">+</v-btn>
-            </v-card-title>
+            <div v-for="(age,index) in key.ChildAge" :key="index" >
+            <div v-if="key.NoOfChild > 0">
+             <v-select style="width:74px; display:inline-flex"
+               @change="onChange"
+               :items="dropdowns"
+               v-model="key.ChildAge[index]"
+               label="Age"
+               solo 
+             ></v-select>
+            </div>
+           </div>
+          
+          </v-card-title><v-divider></v-divider>
+        </div> 
+        
+     
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn
@@ -125,12 +147,10 @@
                 Apply
               </v-btn>
             </v-card-actions>
-          <!-- </v-col> -->
-          <!-- </v-row> -->
+       
           </v-card>
-            <!-- </v-card-title>
-          </v-card> -->
-          </v-dialog>
+          
+          </v-menu>
           </v-col>
           <v-col
           cols="12"
@@ -145,7 +165,7 @@
           </v-col>
     </v-row>
     </v-container>
-   </form>
+   </v-form>
 </div>
 </template>
 
@@ -161,57 +181,77 @@ export default {
     dialog: false,
     tab: null,
     travellers: '',
-    Adult: 1,
-    Child: 0,
-    Infant: 0,
+    Adults : '',
+    Children : '',
+    items: [{NoOfAdults: 1, NoOfChild: 0, ChildAge: []}],
+    Room:1,
+    dropdowns: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],
+    
+    
 
   }),
   
   computed: {
       doubleValue: {
           get(){
+            
+            this.items.map(item => item.NoOfAdults)
+              .reduce((prev, current) =>this.Adults = prev + parseInt(current,10), 0);
+              this.items.map(item => item.NoOfChild)
+              .reduce((prev, current) =>this.Children = prev + parseInt(current,10), 0);
               //this function will determine what is displayed in the input
-              return  this.travellers = this.Adult + '  ' + 'Adults'+ '  ' + this.Child + '  ' + 'Childs'+ '  ' +this.Infant + '  ' + 'Infants';
+              return  this.travellers = this.Adults + '  ' + 'Adults'+ '  ' + this.Children + '  ' + 'Childs'+ '  ' +this.Room + '  ' + 'Rooms';
+              
           },
       }
     },
+    mounted() {
+      
+        },
     methods:{
-        decreaseAdult() {
-          if(this.Adult > 1) {
-              this.Adult -= 1
+      onChange(dropdown){
+        console.log(dropdown);
+        this.selected = dropdown;
+      },
+      decreaseAdult(index) {
+            if(this.items[index].NoOfAdults > 1) {
+              this.items[index].NoOfAdults -= 1
+              }
+          },
+          increaseAdult(index) {
+            console.log(this.items[index].NoOfAdults += 1);
+          },
+          decreaseChild(index) {
+            if(this.items[index].NoOfChild) {
+              this.items[index].NoOfChild -= 1
+              }
+            if(this.items[index].NoOfChild > -1) {  
+              console.log(this.items[index].ChildAge.splice(index,1))
             }
-            if(this.Adult < this.Infant){
-              this.Infant -= 1 ;
-              alert(`Infant can't travel more than Adult`)
-          }
-
-          // console.log('decrease button clicked');
-          // console.log(this.Adult--);
-        },
-        increaseAdult() {
-          this.Adult = this.Adult === 9 ? 9 : this.Adult + 1;
-            // console.log(this.Adult++);
-        },
-        decreaseChild() {
-          if(this.Child) {
-              this.Child -= 1
+          },
+          increaseChild(index) {
+              console.log(this.items[index].NoOfChild += 1)
+              // console.log('this.items[index].ages.length')
+              // console.log(this.items[index].ages.length)
+              console.log(this.items[index].ChildAge.push(this.selected)) 
+              console.log(this.items)
+          },
+          decrease(index) {
+            if(this.items.length > 1) {
+            this.items.splice(index,1)
             }
-        },
-        increaseChild() {
-          this.Child = this.Child === 6 ? 6 : this.Child + 1;
-        },
-        decreaseInfant() {
-          if(this.Infant) {
-              this.Infant -= 1
-            }
-        },
-        increaseInfant() {
-          if(this.Adult > this.Infant){
-            this.Infant = this.Infant === 6 ? 6 : this.Infant + 1;
-          }else{
-            alert(`Infant can't travel more than Adult`)
-          }
-        },
+            if(this.Room > 1) {
+                this.Room -= 1
+              }
+          },
+          increase() {
+            console.log(this.Room++)
+              this.items.push({NoOfAdults: 1, NoOfChild: 0, ChildAge: []});
+          },
+          
+          
+          
+      
     }
 }
 

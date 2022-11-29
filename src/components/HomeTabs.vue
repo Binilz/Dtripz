@@ -1,10 +1,10 @@
 <template>
   <v-img max-height="580" src="https://cdn.wallpapersafari.com/53/10/YeGEIJ.jpg">
-
-  <div class="gray">
-    <div class="helloo">
-    </div>   
-  </div>
+    <div class="gray">
+      <div class="helloo">
+      </div>   
+    </div>
+  
 
   
   <v-row>
@@ -85,7 +85,6 @@ export default{
 
 <style>
 
-
 .gray {
   background-color: #3e154e;
   z-index: -1;
@@ -99,13 +98,14 @@ export default{
   background-color: #3e154e;
   top: 0;
   height: 250px;
-  width: 3000px;
-  
+  width: 2000px;
+  z-index: 1;
   position: relative;
   float:left;
   margin-left: 30px;
   margin-top: 10px;
 }
+
 
 .tabs{
   width:1700px;
