@@ -159,9 +159,9 @@
         >
           <v-btn 
           color="#92278f" 
-          dark >
-         <router-link  style="text-decoration: none; color: inherit;" to="/hotelslist"  >
-            <v-icon>mdi-magnify</v-icon>Search</router-link></v-btn>
+          dark @click="hotelsList">
+         
+          <v-icon>mdi-magnify</v-icon>Search</v-btn>
           </v-col>
     </v-row>
     </v-container>
@@ -169,7 +169,9 @@
 </div>
 </template>
 
+
 <script>
+import axios from 'axios'
 export default {
   data:()=>({
     date1: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
@@ -187,13 +189,18 @@ export default {
     Room:1,
     dropdowns: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],
     
-    
+   
 
   }),
   
   computed: {
       doubleValue: {
           get(){
+            console.log(this.date1),
+              localStorage.setItem('CheckIn',this.date1);
+              localStorage.setItem('DateDiff',Math.floor((Date.parse(this.date2) - Date.parse(this.date1)) / 86400000));
+              localStorage.setItem('YourItems',this.items)
+            
             
             this.items.map(item => item.NoOfAdults)
               .reduce((prev, current) =>this.Adults = prev + parseInt(current,10), 0);
@@ -206,9 +213,61 @@ export default {
       }
     },
     mounted() {
-      
+      this.showIpAddress;
         },
     methods:{
+      hotelsList(){
+          console.log(this.date1);
+           const Night = localStorage.getItem('DateDiff');
+           console.log(Night);
+          console.log(this.Room);
+          console.log('IP Address');      
+          const IPAddress = localStorage.getItem('IP');
+          console.log(IPAddress)
+          axios.post('http://192.168.1.40:8991/api/hotels/search',{
+                    "CheckInDate": this.date1,
+                    "NoOfNights": Night,
+                    "ResultCount": 0,
+                    "IsTBOMapped": "true",
+                    "PreferredCurrency": "INR",
+                    "MaxRating": 5,
+                    "GuestNationality": "IN",
+                    "NoOfRooms": this.Room,
+                    "IsNearBySearchAllowed": false,
+                    "RoomGuests": this.items,
+                    "CityId": 130443,
+                    "MinRating": 1,
+                    "TokenId": "c8035888-abcc-4897-9206-ce71439e3ae0",
+                    "CountryCode": "IN",
+                    "ReviewScore": 0,
+                    "EndUserIp": IPAddress
+                })
+              .then((response)=>{
+              console.log(response.status);
+              console.log('success');
+              this.isLoggingIn = true
+              // setTimeout(() => {
+              //     this.isLoggingIn = false
+              //     this.snackbar = true
+                
+              //     setTimeout(() => this.redirect(), 1000)
+              // }, 1000)
+              this.$router.push("/hotelslist");
+              this.hotels = response.data.HotelSearchResult.HotelResults;
+              console.log(this.hotels);
+              
+              localStorage.setItem('Items',JSON.stringify(this.hotels));
+              localStorage.setItem('TraceId',response.data.HotelSearchResult.TraceId);
+              localStorage.setItem('Token',response.data.Token);
+              console.log(response.data);
+             
+              }).catch((error)=>{
+                  alert( `Something went wrong`)
+              console.log(error);
+              })          
+        },
+      
+    
       onChange(dropdown){
         console.log(dropdown);
         this.selected = dropdown;
@@ -248,11 +307,18 @@ export default {
             console.log(this.Room++)
               this.items.push({NoOfAdults: 1, NoOfChild: 0, ChildAge: []});
           },
+          showIpAddress() {
+            fetch('https://api.ipify.org?format=json')
+          .then(response => response.json())
+          .then(response => {
+          this.IpAddress = response.ip;
+          // console.log('Ip Adresss')
+          // console.log(this.IpAddress)
           
-          
-          
-      
+          localStorage.setItem('IP', this.IpAddress)
+           });
+          }
     }
-}
+  }
 
 </script>

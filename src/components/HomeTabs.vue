@@ -1,5 +1,5 @@
 <template>
-  <v-img max-height="580" src="https://cdn.wallpapersafari.com/53/10/YeGEIJ.jpg">
+  <v-img max-height="580" src="https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg">
     <div class="gray">
       <div class="helloo">
       </div>   
@@ -45,9 +45,7 @@ export default{
     activeTab: 'tab-1',
     
  }),
- mounted() {
-       this.hotel();
-     },
+
  methods: {
   setActive(tab){
     this.activeTab = tab
@@ -55,21 +53,7 @@ export default{
   isActive(tab){
     return this.activeTab === tab;
   },
-  hotel() {       
-          axios.post('http://192.168.1.46:8990/api/hotels/search', {
-               
-
-              }).then((response)=>{
-                if(response.status===200){
-                console.log(response.status);
-                console.log(response.data);
-                // this.$router.push('/login')
-                }
-              }).catch((error)=>{
-                console.log('Hotel error');
-                console.log(error.response);
-              });             
-        }, 
+  
  },
  
      
@@ -119,6 +103,18 @@ export default{
   width: 300px;
   margin: 0 auto;
   
+}
+#main-nav a {
+  text-transform: uppercase;
+  text-decoration: none;
+  color: #ba2121;
+  padding: 10px;
+  display: block;
+}
+
+#main-nav a:hover {
+  background-color: #2c3e50;
+  border: 1px solid #333;
 }
 .nav-item{
   color: purple;

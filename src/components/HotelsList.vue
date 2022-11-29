@@ -34,8 +34,7 @@
 import HomeHeaders from './HomeHeaders.vue'
 
 import axios from 'axios'
-// import VueAxios from 'vue-axios'
-// Vue.use(VueAxios,axios)
+
 export default{
     data()
     {
@@ -53,26 +52,11 @@ export default{
         items:[],    
         }
     },
-    mounted()
-    {
-      this.hotel();
-    },
+ 
     methods:{
-        hotel() {       
-          axios.post('http://192.168.1.46:8991/api/hotels/search')
-              .then((response)=>{       
-                console.log(response.status);
-                console.log(response.data);
-                console.log(response.data.HotelSearchResult.HotelResults.HotelName);
-                this.hotels=response.data.HotelSearchResult.HotelResults
-              }).catch((error)=>{
-                console.log('Hotel error');
-                alert('error')
-                console.log(error.response);
-              });             
-        }, 
-
+      
     },
+   
     components: {
       HomeHeaders,
     },
