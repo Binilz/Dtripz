@@ -2,7 +2,8 @@
 <div>
   <v-app-bar  
   color="#3e154e" height="100" 
-  app style="position:fixed">  
+  app style="position:fixed"
+  flat>  
   
   <button>
       <router-link to="/" ><v-img
@@ -31,7 +32,7 @@
 <v-btn color="white" icon>
   <v-icon>mdi-magnify</v-icon>
 </v-btn> -->
-<v-btn outlined color="white"><router-link to="/login" style="text-decoration :none" class="white--text"><v-icon>mdi-account-plus</v-icon>Sign In or Register</router-link></v-btn>
+<!-- <v-btn outlined color="white"><router-link to="/login" style="text-decoration :none" class="white--text"><v-icon>mdi-account-plus</v-icon>Sign In or Register</router-link></v-btn> -->
 
 </v-list>
 
@@ -45,19 +46,13 @@
 export default {
 data:() => ({
 items: [
-        { title: 'Welcome',},
-      
+        { title: 'Welcome',}, 
         { title: 'About Us', to:"/profilepage"}
       ],
-}),
-methods: {
-  logout()
-  {
-    localStorage.clear();
-    this.$router.push({name:'login'})
-  }
+})
 }
-}
+
+
 </script>
 
 <style scoped>

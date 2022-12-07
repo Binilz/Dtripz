@@ -1,27 +1,23 @@
 <template>
+  
   <v-img max-height="580" src="https://coolbackgrounds.io/images/backgrounds/white/pure-white-background-85a2a7fd.jpg">
-    <div class="gray">
-      <div class="helloo">
-      </div>   
-    </div>
-  
+    <v-row class="background">
 
-  
   <v-row>
     
-    <div class="tabs mt-1">
-     <div class="border">
-      <div class="nav-tabs">
+    <div class="tabs ">
+     <div class="border align-center" >
+      <div class="nav-tabs mt-8">
         <div class="nav-item" @click="setActive('tab-1')" :class="{ 'active' : isActive('tab-1') }">
-          <v-icon color="purple">mdi-home-city</v-icon>Hotels
+          <v-icon color="white">mdi-home-city</v-icon>Hotels
       </div>
       <div class="nav-item"  @click="setActive('tab-2')" :class="{ 'active' : isActive('tab-2') }">
-        <v-icon color="purple">mdi-airplane</v-icon>Flights
+        <v-icon color="white">mdi-airplane</v-icon>Flights
       </div>
       
     </div>
     </div>
-    <div class="tab-content">
+    <div class="tab-content mt-4">
       <div class="tab-pane" v-show="isActive('tab-1')">
         <hotel-tab></hotel-tab>
         </div>
@@ -32,6 +28,7 @@
     </div>
    
   </v-row>
+</v-row>
 </v-img>
 </template>
 
@@ -69,25 +66,16 @@ export default{
 
 <style>
 
-.gray {
+.background {
+  height: 40%;
+  width: 120;
   background-color: #3e154e;
-  z-index: -1;
-  height: auto;
-  width: 2000px;
-  position: absolute;
-  overflow: hidden;
 }
 
-.helloo {
-  background-color: #3e154e;
-  top: 0;
-  height: 250px;
-  width: 2000px;
-  z-index: 1;
-  position: relative;
-  float:left;
-  margin-left: 30px;
-  margin-top: 10px;
+.border{
+  align-items: center;
+  justify-content: center;
+  
 }
 
 
@@ -96,18 +84,28 @@ export default{
   margin: 0 auto;
   color:"#3e154e";
   
+  
 
 }
 .nav-tabs{
   display: flex;
+  height:70px;
   width: 300px;
   margin: 0 auto;
+  align-items: center;
+  justify-content: center;
+  border-style: solid;
+  border-width: 3px;
+  border-radius: 70px;
+  border-color: #f04e6e;
   
+  background-color: #92278f;
+
 }
 #main-nav a {
   text-transform: uppercase;
   text-decoration: none;
-  color: #ba2121;
+  color: #ffffff;
   padding: 10px;
   display: block;
 }
@@ -117,7 +115,7 @@ export default{
   border: 1px solid #333;
 }
 .nav-item{
-  color: purple;
+  color: rgb(0, 0, 0);
   transition: all 150ms;
   cursor: pointer;
   height: 100px;
@@ -127,15 +125,16 @@ export default{
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  border-top-left-radius: 6px;
-  border-top-right-radius: 6px;
+  border-radius: 40px;
   
+
 }
 
 .tab-content{
   border: solid 3px rgb(200, 53, 205);
-  border-radius: 10px;
-  
+  border-radius: 40px;
+  align-items: center;
+  justify-content: center;
 }
 .for-example h2{
   margin-top: 0;
@@ -144,16 +143,15 @@ export default{
 
 .active{
   color: white;
-
+  align-items: center;
+  justify-content: center;
   
 }
 .tab-pane{
   background-color: white;
   padding: 12px;
-  border-top-left-radius: 6px ;
-  border-top-right-radius: 6px;
-  border-bottom-left-radius: 6px;
-  border-bottom-right-radius: 6px;
+  border-radius: 40px ;
+ 
 }
 #no-background-hover::before {
   background-color: transparent !important; 

@@ -7,6 +7,7 @@ import RegisterPage from '../components/RegisterPage'
 import HotelsList from '../components/HotelsList'
 import ProfilePage from '../components/ProfilePage'
 import LoginDetails from '../components/LoginDetails'
+import HotelDetails from '../components/HotelDetails'
 import ProPic from '../components/ProPic'
 
 Vue.use(VueRouter)
@@ -54,6 +55,11 @@ const routes = [
     path: '/logindetails',
     name: 'logindetails',
     component: LoginDetails
+  },
+  {
+    path: '/hoteldetails',
+    name: 'hoteldetails',
+    component: HotelDetails
   },
   {
     path: '/propic',

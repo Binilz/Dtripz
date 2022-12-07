@@ -2,56 +2,78 @@
     <div>
     <v-form>
     <v-container>
-      <v-row>
+      <v-row class="mt-10">
             <v-col
           cols="12"
           sm="16"
-          md="14"
+          md="3"
           dense
         >
+        <v-menu
+            v-model="select"
+            ref="menu" offset-y :close-on-content-click="false"
+          >
+          <template v-slot:activator="{ on, attrs }">
           <v-text-field
             label="Select destination"
             outlined
             color="purple"
+            v-bind="attrs"
+            v-on="on"
+            @input="SelectDestination"
+            v-model="search"
           ></v-text-field>
+          </template>
+          <v-card class="mx-auto" max-height="200" max-width="344">
+            <v-list>
+            <v-list-item @click="selectItem(place)" v-for="(place, index) in filterDestination" :key="`place-${index}`">
+            {{place.destination}},{{ place.country }}
+            </v-list-item>
+            </v-list>
+          </v-card>
+          </v-menu>
           </v-col>
           <v-col
             cols="12"
             sm="6"
-            md="4"
+            md="3"
             >
-          <v-menu
-            v-model="checkin"
-            :close-on-content-click="false"
-            :nudge-right="40"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
+            <v-menu
+          v-model="dateRangeText"
+          label="Date range"
+          prepend-inner-icon="mdi-calendar"
+          readonly
+          :close-on-content-click="false"
+          :nudge-right="40"
+          transition="scale-transition"
+          offset-y
+          min-width="auto"
+          color="purple"
+          outlined
+        >
+        <template v-slot:activator="{ on, attrs }">
+          <v-text-field
+            v-model="dateRangeText"
+            label="Checkin & Checkout"
+            prepend-inner-icon="mdi-calendar"
+            outlined
+            v-bind="attrs"
+            v-on="on"
             color="purple"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                v-model="date1"
-                label="Check in"
-                prepend-inner-icon="mdi-calendar"
-                outlined
-                v-bind="attrs"
-                v-on="on"
-                color="purple"
-              ></v-text-field>
-            </template>
-            <v-date-picker
-              v-model="date1"
-              :min="nowDate"
-              @input="checkin = false"
-              color="purple"
-            ></v-date-picker>
-          </v-menu>
+          ></v-text-field>
+          </template>
+        <v-date-picker
+          v-model="dates"
+          range
+          color="purple"
+        ></v-date-picker>
+        </v-menu>
+        
         </v-col>
-        <v-col
+        <!-- <v-col
             cols="12"
             sm="6"
-            md="4"
+            md="3"
             >
           <v-menu
             v-model="checkout"
@@ -80,10 +102,10 @@
               color="purple"
             ></v-date-picker>
           </v-menu>
-        </v-col>
+        </v-col> -->
           <v-col
             cols="12"
-            sm="6" md="4"
+            sm="6" md="3"
           >
           <v-menu
             v-model="dialog"
@@ -159,8 +181,9 @@
         >
           <v-btn 
           color="#92278f" 
-          dark @click="hotelsList">
-         
+          type="button" class="button"
+          dark @click="hotelsList" >
+          
           <v-icon>mdi-magnify</v-icon>Search</v-btn>
           </v-col>
     </v-row>
@@ -172,8 +195,11 @@
 
 <script>
 import axios from 'axios'
+import DateRangePicker from 'vue2-daterange-picker'
+import 'vue2-daterange-picker/dist/vue2-daterange-picker.css'
 export default {
   data:()=>({
+    dates: [],
     date1: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     // date2: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
     date2: '',
@@ -188,19 +214,35 @@ export default {
     items: [{NoOfAdults: 1, NoOfChild: 0, ChildAge: []}],
     Room:1,
     dropdowns: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],
-    
+    hotels:[],
+    destination:[],
+    search:'',
+    destPlace:'',
+    cityId:'',
+    countrycode:'',
+    select: '',
+    difference:'',
+    filters: {
+  
+}
    
 
   }),
   
+  
   computed: {
+    dateRangeText () {
+        return this.dates.join(' ~ ')
+      },
       doubleValue: {
           get(){
             console.log(this.date1),
               localStorage.setItem('CheckIn',this.date1);
               localStorage.setItem('DateDiff',Math.floor((Date.parse(this.date2) - Date.parse(this.date1)) / 86400000));
               localStorage.setItem('YourItems',this.items)
-            
+              this.difference = Math.floor((Date.parse(this.date2) - Date.parse(this.date1)) / 86400000);
+              console.log(this.difference)
+              console.log(this.date2);
             
             this.items.map(item => item.NoOfAdults)
               .reduce((prev, current) =>this.Adults = prev + parseInt(current,10), 0);
@@ -210,16 +252,55 @@ export default {
               return  this.travellers = this.Adults + '  ' + 'Adults'+ '  ' + this.Children + '  ' + 'Childs'+ '  ' +this.Room + '  ' + 'Rooms';
               
           },
-      }
+      },
+      filterDestination(){
+          console.log(this.search);
+            return this.destination.filter(place => {
+              return place.country.toLowerCase().includes(this.search.trim().toLowerCase()) || 
+                place.destination.toLowerCase().includes(this.search.trim().toLowerCase());
+        });
+      } ,
     },
     mounted() {
-      this.showIpAddress;
+      this.showIpAddress();
+      this.SelectDestination();
         },
     methods:{
+      
+      selectItem(place){
+          this.search = place.destination + ',' + place.country ;
+          console.log(this.search)
+          this.select = false;
+          this.countrycode = place.countrycode;
+          console.log(this.countrycode);
+          this.cityId = place.cityid;
+          console.log(this.cityId);
+          this.isVisible = false;
+        },
+        SelectDestination(search){
+          console.log('hello');         
+          axios.post("http://192.168.1.40:8991/api/city/page",{
+              "off": 0,
+              "on" :7,
+              "keyword": this.search
+          })
+          .then((response)=>{
+                console.log(response.status);
+                console.log(response.data);
+                this.dest = response.data;
+                this.destination = [...new Set(this.dest)]
+                console.log("success")
+               
+          }).catch((error)=>{
+                console.log(error.response);
+          });
+      },
+      components: { DateRangePicker },
+
       hotelsList(){
           console.log(this.date1);
-           const Night = localStorage.getItem('DateDiff');
-           console.log(Night);
+          const Night = localStorage.getItem('DateDiff');
+          console.log(Night);
           console.log(this.Room);
           console.log('IP Address');      
           const IPAddress = localStorage.getItem('IP');
@@ -245,7 +326,7 @@ export default {
               .then((response)=>{
               console.log(response.status);
               console.log('success');
-              this.isLoggingIn = true
+              
               // setTimeout(() => {
               //     this.isLoggingIn = false
               //     this.snackbar = true
@@ -318,7 +399,8 @@ export default {
           localStorage.setItem('IP', this.IpAddress)
            });
           }
-    }
+    },
+    
   }
 
 </script>

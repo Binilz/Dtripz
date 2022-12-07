@@ -33,7 +33,7 @@
 
 import HomeHeaders from './HomeHeaders.vue'
 
-import axios from 'axios'
+
 
 export default{
     data()
@@ -52,8 +52,12 @@ export default{
         items:[],    
         }
     },
- 
+    created() {
+          this.hotels = JSON.parse(localStorage.getItem("Items") || '[]')
+        },
     methods:{
+     
+     
       
     },
    
