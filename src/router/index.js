@@ -1,45 +1,139 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue'
-import LogIn from '../components/LogIn'
-import FacebookGoogle from '../components/FacebookGoogle'
-import RegisterPage from '../components/RegisterPage'
+import HomeView from '../views/HomeView.vue';
+import AboutUs from '../views/aboutus/AboutUs.vue';
+import PrivacyPolicy from '../views/supportPage/PrivacyPolicy.vue';
+import RefundPolicy from '../views/supportPage/RefundPolicy.vue';
+import TermsConditions from '../views/supportPage/TermsConditions.vue';
+import SocialLogin from '../views/SocialLogin.vue';
+import IconsPage from '../components/icons/IconsPage.vue';
+import LoginCard from '../components/loginRegister/LoginCard.vue';
+import RegisterCard from '../components/loginRegister/RegisterCard.vue';
+//
+import ProfilePage from '../components/ProfilePage.vue';
+import DefaultLayout from '../components/userdetails/DefaultLayout.vue';
+
+import UserProfile from '../components/userdetails/UserProfile.vue';
+import HotelSearch from '../components/hotel/HotelSearch.vue';
+import HotelDetails from '../components/hotel/HotelDetails.vue';
+import HotelRoom from '../components/hotel/HotelRoom.vue';
+import HotelFlight from '../components/hotelFlightPage/HotelFlight.vue';
+import GoogleMap from '../components/hotel/GoogleMap.vue';
+import DateRange from '../components/hotel/DateRange.vue';
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
+    redirect: 'home',
+  },
+  //
+  //
+  //
+  {
+    path: '/p',
+    name: 'p',
+    component: ProfilePage
+  },
+  {
+    path: '/d',
+    name: 'd',
+    component: DefaultLayout
+  },
+
+
+  {
+    path: '/google',
+    name: 'google',
+    component: SocialLogin
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    component: UserProfile
+  },
+  {
+    path: '/hotelsearch',
+    name: 'hotelsearch',
+    component: HotelSearch
+  },
+  {
+    path: '/hoteldetails',
+    name: 'hoteldetails',
+    component: HotelDetails
+  },
+  {
+    path: '/hotelroom',
+    name: 'hotelroom',
+    component: HotelRoom
+  },
+  {
+    path: '/hotelflight',
+    name: 'hotelflight',
+    component: HotelFlight
+  },
+  {
+    path: '/icons',
+    name: 'icons',
+    component: IconsPage
+  },
+  {
+    path: '/home',
     name: 'home',
     component: HomeView
   },
   {
-    path: '/about',
-    name: 'about',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+    path: '/aboutus',
+    name: 'aboutus',
+    component: AboutUs
   },
   {
-    path: '/login',
-    name: 'login',
-    component: LogIn
+    path: '/logincard',
+    name: 'logincard',
+    component: LoginCard
   },
   {
-    path: '/registerpage',
-    name: 'registerpage',
-    component: RegisterPage
+    path: '/register',
+    name: 'register',
+    component: RegisterCard
   },
   {
-    path: '/facebookgoogle',
-    name: 'facebookgoogle',
-    component: FacebookGoogle
+    path: '/privacy',
+    name: 'privacy',
+    component: PrivacyPolicy
+  },
+  {
+    path: '/refund',
+    name: 'refund',
+    component: RefundPolicy
+  },
+  {
+    path: '/terms',
+    name: 'terms',
+    component: TermsConditions
+  },
+  {
+    path: '/googlemap',
+    name: 'GoogleMap',
+    component: GoogleMap
+  },
+  {
+    path: '/daterange',
+    name: 'DateRange',
+    component: DateRange
   },
 ]
 
 const router = new VueRouter({
-  routes
+  routes,
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { x: 0, y: 0 }
+    }
+  }
 })
 
 export default router

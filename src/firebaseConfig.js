@@ -1,9 +1,9 @@
 export default {
-    apiKey: "AIzaSyC6ERFuMM5zo4DIqDNv5WalOLmMBPmd54k",
-    authDomain: "dtrips-86af6.firebaseapp.com",
-    projectId: "dtrips-86af6",
-    storageBucket: "dtrips-86af6.appspot.com",
-    messagingSenderId: "420431128930",
-    appId: "1:420431128930:web:aca36f0d5ace49c119e43b",
-    measurementId: "G-EW1LZQBK0D"
+    apiKey: "AIzaSyBfCM0Nnb6OwE-fRV7B3ucl4eEZpsXcagM",
+    authDomain: "sociallogin-169db.firebaseapp.com",
+    projectId: "sociallogin-169db",
+    storageBucket: "sociallogin-169db.appspot.com",
+    messagingSenderId: "441691645749",
+    appId: "1:441691645749:web:ae058e168715466cd98e7c",
+    measurementId: "G-G6K4F2M6MK"
   };
