@@ -7,21 +7,16 @@ import vuetify from './plugins/vuetify'
 import './assets/tailwind.css';
 import axios from 'axios'
 import VueAxios from 'vue-axios'
-import VueGeolocation from 'vue-browser-geolocation'
-import * as VueGoogleMaps from 'vue2-google-maps'
-import VueDatepickerUi from 'vue-datepicker-ui'
-import 'vue-datepicker-ui/lib/vuedatepickerui.css';
-import VMdDateRangePicker from "v-md-date-range-picker";
- 
-Vue.use(VMdDateRangePicker);
+
+import * as VueGoogleMaps from "vue2-google-maps" 
+
 
 Vue.config.productionTip = false
-Vue.use(VueGeolocation)
-Vue.component('Datepicker', VueDatepickerUi)
+
 Vue.use(VueGoogleMaps, {
   load: {
-    key: 'AIzaSyCnkotaR_SjW39ABez3mvrKxUrx6vpRgyI',
-    libraries: 'places',
+    key: "AIzaSyCCN-yxDfD8aqEFSedq3RDjoe3MH9QcATM",
+    libraries: "places"
   }
 });
 

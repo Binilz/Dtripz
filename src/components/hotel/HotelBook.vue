@@ -95,8 +95,10 @@
           <v-date-picker
           v-model="dates"
           :min="new Date().toISOString().substr(0, 10)"
+          
           color="purple"
           range
+          
         ></v-date-picker>
         
 </v-menu>
@@ -252,8 +254,10 @@ export default {
     destPlace:'',
     cityId:'',
     countrycode:'',
+    "showDropdowns": true,
   }),
   computed: {
+ 
     dateRangeText () {
         return this.dates.join(' ~ ')
       },
