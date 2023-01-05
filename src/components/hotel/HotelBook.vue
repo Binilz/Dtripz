@@ -9,7 +9,7 @@
 
       <v-tab class="ml-1 purple--text"
       width="200px">
-        Hotels
+        Hotel
       </v-tab>
       </v-tabs>
       <br>
