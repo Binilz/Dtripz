@@ -77,18 +77,13 @@
                               dark
                               block
                               tile
+                              @click="loginValidation"
                             >Log in</v-btn
                             >
                             <br>
                             
                              <v-row>
-                              <v-col cols="12" sm="7">
-                                <v-checkbox
-                                  label="Terms & Condition"
-                                  class="mt-n1"
-                                  color="#3e154e"
-                                > </v-checkbox>
-                              </v-col>
+                             
                               <v-col cols="13" sm="5">
                                 
                                 <router-link to='/forgetpassword' class="reset-button">Forget password</router-link>
@@ -154,15 +149,15 @@ dialog:false,
   },
   methods: {
     loginValidation() {
-      axios.post('http://192.168.1.39:8991/api/auth/api/signin', {
+      axios.post('http://192.168.1.46:8991/api/auth/signin', {
             "username" : this.email,
             "password": this.password,
               }).then((response)=>{
-              if(response.status===200){
+              // if(response.status===200) {
                 console.log(response.status);
                 console.log(response.data);
                 this.$router.push("/");
-              }
+              // }
               }).catch((error)=>{                     
                 console.log(error);
               }); 

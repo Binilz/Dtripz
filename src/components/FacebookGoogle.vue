@@ -23,7 +23,7 @@ export default{
     
     
    
-    setup() {
+    mounted() {
         const user = ref(null);
         const email = ref(null);
         const image = ref(null);
@@ -62,14 +62,14 @@ export default{
                 console.log(response.status);
                 console.log(response.data);
                 console.log('googlelogin')
-              
+                // this.$router.push("/");
                   }).catch((error)=>{                     
                 console.log(error);
                  }); 
                 }else{
                     console('login again')
                  }
-               
+                 
                 return false;
             },
             // uiShown: function() {

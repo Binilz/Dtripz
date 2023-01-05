@@ -11,6 +11,7 @@
           <v-text-field
             label="From"
             outlined
+            color="purple"
           ></v-text-field>
         </v-col>
         <v-col
@@ -21,6 +22,7 @@
           <v-text-field
             label="To"
             outlined
+            color="purple"
           ></v-text-field>
         </v-col>
         <v-col
@@ -42,6 +44,7 @@
                 label="Departure"
                 prepend-inner-icon="mdi-calendar"
                 outlined
+                color="purple"
                 v-bind="attrs"
                 v-on="on"
               ></v-text-field>
@@ -62,6 +65,7 @@
             :items="items"
             label="Class"
             outlined
+            color="purple"
             ></v-select>
         </v-col>
           <!-- <v-col
