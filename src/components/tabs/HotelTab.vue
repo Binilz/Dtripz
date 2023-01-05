@@ -1,5 +1,19 @@
 <template>
     <div>
+      <v-dialog
+      content-class="elevation-0"
+      v-model="isLoggingIn"
+      persistent
+      width="600"
+    >
+  <!-- <v-card
+
+  >
+    <v-card-text> -->
+      <v-img src="loadingHotel.gif"></v-img>
+    <!-- </v-card-text>
+  </v-card> -->
+</v-dialog>
     <v-form>
     <v-container>
       <v-row class="mt-10">
@@ -25,9 +39,14 @@
           ></v-text-field>
           </template>
           <v-card class="mx-auto" max-height="200" max-width="344">
+            <span class="mx-auto" v-if="filterDestination.length === 0">No result found</span>
             <v-list>
             <v-list-item @click="selectItem(place)" v-for="(place, index) in filterDestination" :key="`place-${index}`">
-            {{place.destination}},{{ place.country }}
+              <v-icon>mdi-map-marker-outline</v-icon>
+              <h5>{{place.destination}}</h5> &nbsp;-
+              <div> <h5 class="text-center grey--text text-pre-wrap">
+                 {{ place.country }}
+                           </h5></div>
             </v-list-item>
             </v-list>
           </v-card>
@@ -39,10 +58,10 @@
             md="3"
             >
             <v-menu
-          v-model="dateRangeText"
+          v-model="checkout"
           label="Date range"
           prepend-inner-icon="mdi-calendar"
-          readonly
+         
           :close-on-content-click="false"
           :nudge-right="40"
           transition="scale-transition"
@@ -53,56 +72,40 @@
         >
         <template v-slot:activator="{ on, attrs }">
           <v-text-field
-            v-model="dateRangeText"
-            label="Checkin & Checkout"
+            v-model="dates[0]"
+            label="Checkin"
             prepend-inner-icon="mdi-calendar"
             outlined
             v-bind="attrs"
             v-on="on"
             color="purple"
+            
           ></v-text-field>
           </template>
         <v-date-picker
           v-model="dates"
           range
           color="purple"
+          :min="nowDate"
         ></v-date-picker>
         </v-menu>
         
         </v-col>
-        <!-- <v-col
+        <v-col
             cols="12"
             sm="6"
             md="3"
             >
-          <v-menu
-            v-model="checkout"
-            :close-on-content-click="false"
-            :nudge-right="40"
-            transition="scale-transition"
-            offset-y
-            min-width="auto"
-            color="purple"
-          >
-            <template v-slot:activator="{ on, attrs }">
-              <v-text-field
-                v-model="date2"
-                label="Check Out"
-                prepend-inner-icon="mdi-calendar"
-                outlined
-                v-bind="attrs"
-                v-on="on"
-                color="purple"
-              ></v-text-field>
-            </template>
-            <v-date-picker
-              v-model="date2"
-              :min="date1"
-              @input="checkout = false"
-              color="purple"
-            ></v-date-picker>
-          </v-menu>
-        </v-col> -->
+            <v-text-field color="purple"
+            v-model="dates[1]"
+            label="Check Out"
+            prepend-inner-icon="mdi-calendar"
+            
+            outlined
+            disabled
+          ></v-text-field>
+            
+        </v-col>
           <v-col
             cols="12"
             sm="6" md="3"
@@ -181,8 +184,8 @@
         >
           <v-btn 
           color="#92278f" 
-          type="button" class="button"
-          dark @click="hotelsList" >
+          type="button" :disabled="dialog"
+          dark @click="hotelsList" :loading="isLoggingIn">
           
           <v-icon>mdi-magnify</v-icon>Search</v-btn>
           </v-col>
@@ -222,9 +225,7 @@ export default {
     countrycode:'',
     select: '',
     difference:'',
-    filters: {
-  
-}
+    isLoggingIn: false,
    
 
   }),
@@ -238,11 +239,14 @@ export default {
           get(){
             console.log(this.date1),
               localStorage.setItem('CheckIn',this.date1);
-              localStorage.setItem('DateDiff',Math.floor((Date.parse(this.date2) - Date.parse(this.date1)) / 86400000));
+              localStorage.setItem('DateDiff',Math.floor((Date.parse(this.dates[1]) - Date.parse(this.dates[0])) / 86400000));
               localStorage.setItem('YourItems',this.items)
-              this.difference = Math.floor((Date.parse(this.date2) - Date.parse(this.date1)) / 86400000);
+              this.difference = Math.floor((Date.parse(this.dates[1]) - Date.parse(this.dates[0]))/ 86400000);
+              console.log(this.dates[1]);
+              console.log(this.dates[0]);
               console.log(this.difference)
-              console.log(this.date2);
+              localStorage.setItem('CheckIn',this.dates[0]);
+              localStorage.setItem('CheckOut',this.dates[1])
             
             this.items.map(item => item.NoOfAdults)
               .reduce((prev, current) =>this.Adults = prev + parseInt(current,10), 0);
@@ -279,7 +283,7 @@ export default {
         },
         SelectDestination(search){
           console.log('hello');         
-          axios.post("http://192.168.1.40:8991/api/city/page",{
+          axios.post(this.$hostname + "api/hotels/page" ,{
               "off": 0,
               "on" :7,
               "keyword": this.search
@@ -295,9 +299,9 @@ export default {
                 console.log(error.response);
           });
       },
-      components: { DateRangePicker },
-
+      
       hotelsList(){
+          this.isLoggingIn = true;
           console.log(this.date1);
           const Night = localStorage.getItem('DateDiff');
           console.log(Night);
@@ -305,20 +309,20 @@ export default {
           console.log('IP Address');      
           const IPAddress = localStorage.getItem('IP');
           console.log(IPAddress)
-          axios.post('http://192.168.1.40:8991/api/hotels/search',{
+          axios.post(this.$hostname + 'api/hotels/search',{
                     "CheckInDate": this.date1,
                     "NoOfNights": Night,
                     "ResultCount": 0,
-                    "IsTBOMapped": "true",
+                    // "IsTBOMapped": "true",
                     "PreferredCurrency": "INR",
                     "MaxRating": 5,
                     "GuestNationality": "IN",
                     "NoOfRooms": this.Room,
                     "IsNearBySearchAllowed": false,
                     "RoomGuests": this.items,
-                    "CityId": 130443,
+                    "CityId": this.cityId,
                     "MinRating": 1,
-                    "TokenId": "c8035888-abcc-4897-9206-ce71439e3ae0",
+                    // "TokenId": "c8035888-abcc-4897-9206-ce71439e3ae0",
                     "CountryCode": "IN",
                     "ReviewScore": 0,
                     "EndUserIp": IPAddress

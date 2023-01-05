@@ -35,7 +35,7 @@
 <script>
 import HotelTab from '../components/tabs/HotelTab.vue';
 import FlightTab from '../components/tabs/FlightTab.vue';
-import axios from 'axios'
+
 export default{
   components: {HotelTab,FlightTab},
  data : () => ({
