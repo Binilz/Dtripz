@@ -1,62 +1,60 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import HomeView from '../views/HomeView.vue';
-import AboutUs from '../views/aboutus/AboutUs.vue';
-import PrivacyPolicy from '../views/supportPage/PrivacyPolicy.vue';
-import RefundPolicy from '../views/supportPage/RefundPolicy.vue';
-import TermsConditions from '../views/supportPage/TermsConditions.vue';
-import SocialLogin from '../views/SocialLogin.vue';
-import IconsPage from '../components/icons/IconsPage.vue';
-import LoginCard from '../components/loginRegister/LoginCard.vue';
-import RegisterCard from '../components/loginRegister/RegisterCard.vue';
-//
-import ProfilePage from '../components/ProfilePage.vue';
-import DefaultLayout from '../components/userdetails/DefaultLayout.vue';
-
-import UserProfile from '../components/userdetails/UserProfile.vue';
-import HotelSearch from '../components/hotel/HotelSearch.vue';
-import HotelDetails from '../components/hotel/HotelDetails.vue';
-import HotelRoom from '../components/hotel/HotelRoom.vue';
-import HotelFlight from '../components/hotelFlightPage/HotelFlight.vue';
-import GoogleMap from '../components/hotel/GoogleMap.vue';
-import DateRange from '../components/hotel/DateRange.vue';
+import HomeView from '../views/HomeView.vue'
+import LogIn from '../components/LogIn'
+import FacebookGoogle from '../components/FacebookGoogle'
+import RegisterPage from '../components/RegisterPage'
+import HotelsList from '../components/HotelsList'
+import ProfilePage from '../components/ProfilePage'
+import LoginDetails from '../components/LoginDetails'
+import HotelDetails from '../components/HotelDetails'
+import ProPic from '../components/ProPic'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    redirect: 'home',
+    name: 'home',
+    component: HomeView
   },
-  //
-  //
-  //
   {
-    path: '/p',
-    name: 'p',
+    path: '/about',
+    name: 'about',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "about" */ '../views/AboutView.vue')
+  },
+  {
+    path: '/login',
+    name: 'login',
+    component: LogIn
+  },
+  {
+    path: '/registerpage',
+    name: 'registerpage',
+    component: RegisterPage
+  },
+  {
+    path: '/facebookgoogle',
+    name: 'facebookgoogle',
+    component: FacebookGoogle
+  },
+  {
+    path: '/hotelslist',
+    name: 'hotelslist',
+    component: HotelsList
+  },
+  {
+    path: '/profilepage',
+    name: 'profilepage',
     component: ProfilePage
   },
   {
-    path: '/d',
-    name: 'd',
-    component: DefaultLayout
-  },
-
-
-  {
-    path: '/google',
-    name: 'google',
-    component: SocialLogin
-  },
-  {
-    path: '/profile',
-    name: 'profile',
-    component: UserProfile
-  },
-  {
-    path: '/hotelsearch',
-    name: 'hotelsearch',
-    component: HotelSearch
+    path: '/logindetails',
+    name: 'logindetails',
+    component: LoginDetails
   },
   {
     path: '/hoteldetails',
@@ -64,76 +62,14 @@ const routes = [
     component: HotelDetails
   },
   {
-    path: '/hotelroom',
-    name: 'hotelroom',
-    component: HotelRoom
-  },
-  {
-    path: '/hotelflight',
-    name: 'hotelflight',
-    component: HotelFlight
-  },
-  {
-    path: '/icons',
-    name: 'icons',
-    component: IconsPage
-  },
-  {
-    path: '/home',
-    name: 'home',
-    component: HomeView
-  },
-  {
-    path: '/aboutus',
-    name: 'aboutus',
-    component: AboutUs
-  },
-  {
-    path: '/logincard',
-    name: 'logincard',
-    component: LoginCard
-  },
-  {
-    path: '/register',
-    name: 'register',
-    component: RegisterCard
-  },
-  {
-    path: '/privacy',
-    name: 'privacy',
-    component: PrivacyPolicy
-  },
-  {
-    path: '/refund',
-    name: 'refund',
-    component: RefundPolicy
-  },
-  {
-    path: '/terms',
-    name: 'terms',
-    component: TermsConditions
-  },
-  {
-    path: '/googlemap',
-    name: 'GoogleMap',
-    component: GoogleMap
-  },
-  {
-    path: '/daterange',
-    name: 'DateRange',
-    component: DateRange
+    path: '/propic',
+    name: 'propic',
+    component: ProPic
   },
 ]
 
 const router = new VueRouter({
-  routes,
-  scrollBehavior(to, from, savedPosition) {
-    if (savedPosition) {
-      return savedPosition
-    } else {
-      return { x: 0, y: 0 }
-    }
-  }
+  routes
 })
 
 export default router

@@ -1,177 +1,260 @@
 <template>
-    <div>
-        <br>
-        <br>
-        <br>
-        <section class="dropdown-wrapper">
-          <div @click="isVisible = !isVisible" class="selected-item">
-            <span v-if="selectedItem">{{destPlace}}, {{selectedItem}}</span>
-            <span v-else>Select Destination</span>
-          </div> 
-          <div v-if="isVisible" class="dropdown-popover">
-            <input v-model="search" type="text" placeholder="Search Destination" @input="SelectDestination">
-            <span v-if="filterDestination.length === 0">No result found</span>
-            <div class="options">
-              <ul>
-                <li @click="selectItem(place)" v-for="(place, index) in filterDestination" :key="`place-${index}`"> {{place.destination}},{{ place.country }}</li>
-              </ul>
-            </div>
-          </div> 
-        </section>
-    </div>
+   <v-img src="https://img.freepik.com/free-vector/elegant-white-background-with-shiny-lines_1017-17580.jpg?w=2000">
+    
+ <div>
+  <home-headers/>
+  <br>
+ 
+  <v-row class="ma-10">
+    <div class="sm-1 ml-16">
+    <v-col  >
+      <v-card
+    height="350"
+    width="260"
+    elevation="5">
+ 
+      <v-list-item>
+     <!-- <v-list-item-avatar>
+            <v-img :src="user.photoURL"></v-img>
+            </v-list-item-avatar>
+            </v-list-item> -->
+            
+        <v-list-item-content>
+          <v-list-item-title class="text-h6">
+            {{user.displayName}}
+          </v-list-item-title>
+          <v-list-item-subtitle>
+            Personal Profile
+          </v-list-item-subtitle>
+        </v-list-item-content>
+      </v-list-item>
+
+      <v-divider></v-divider>
+
+      <v-list
+        dense
+        nav
+      >
+        <v-list-item
+          v-for="item in items"
+          :key="item.title"
+          link
+        >
+          <v-list-item-icon>
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-list-item-icon>
+
+          <v-list-item-content>
+            <v-list-item-title>{{ item.title }}</v-list-item-title>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    
+  </v-card>
+    </v-col>
+
+  </div>
+  
+      <v-col >
+        <div class="mr-14">
+        <v-card class=" rounded-xl" elevation="5">
+  
+          <v-card-title class="text-h4" >
+          <strong>Profile </strong> <v-spacer></v-spacer> <v-card-actions>
+            <div class="text-">
+              <v-dialog
+                v-model="dialog"
+                width="500"
+              >
+                <template v-slot:activator="{ on, attrs }">
+            <v-btn   
+            color="purple"
+            dark
+            v-bind="attrs"
+            v-on="on">
+            <v-icon left>
+              mdi-pencil
+            </v-icon>
+              Edit
+            </v-btn>
+          </template>
+
+        </v-dialog>
+      </div>
+          </v-card-actions>
+      
+          </v-card-title>
+          
+          
+          <v-card-subtitle>Basic info, for a faster booking experience</v-card-subtitle>
+        <div class="ml-6 mr-6 ">
+    
+          <p>
+            Name &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp;  &nbsp; &nbsp; :
+            <strong>{{user.displayName}}</strong>
+            <br>
+            <br>
+            <v-divider></v-divider>
+           
+          
+            <br />Email  &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp; &nbsp; &nbsp;  &nbsp;:
+            <strong>{{user.email}}</strong>
+            <br>
+            <br>
+            <v-divider></v-divider>
+
+           <br>
+         
+            Gender &nbsp;  &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  :
+            <strong></strong>
+            <br>
+            <br>
+            <v-divider></v-divider>
+            <br>
+          
+           Marital Status &nbsp; :
+            <strong></strong>
+           <br>
+          <br>
+   <v-divider></v-divider>
+   <br>
+     Mobile Number&nbsp;:
+   <strong></strong>
+   <br>
+   <br>
+   <br>
+   <v-divider></v-divider>
+  </p>
+          </div>      
+             
+        </v-card>
+        </div>
+
+        <v-dialog
+        v-model="dialog"
+        persistent
+        max-width="600px"
+      >
+        <v-card>
+          <v-card-title>
+            <span class="text-h5">Edit Profile</span>
+          </v-card-title>
+          <v-card-text>
+            
+              <v-row>
+                <v-col
+                cols="12"
+                sm="6"
+                md="4"
+                >
+                  <v-text-field
+                    label="Name"
+                                       
+                  ></v-text-field>
+                </v-col>
+                <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                ><v-select
+                :items="gender"
+                label="Gender"
+              ></v-select>
+                </v-col>
+                </v-row>
+               
+               <v-row>
+                <v-col
+                cols="12"
+                sm="6"
+                md="4"
+              > 
+              <v-text-field
+              label="Mobile Number"
+              type="number"                   
+            ></v-text-field>
+              </v-col>
+              <v-col
+                  cols="12"
+                  sm="6"
+                  md="4"
+                >
+                <v-select
+                :items="marital"
+                label="Marital Status"
+              ></v-select>
+                </v-col>
+               </v-row>
+         
+          </v-card-text>
+          <v-card-actions>
+            <v-spacer></v-spacer>
+            <v-btn
+              color="green darken-1"
+              text
+              @click="dialog = false"
+            >
+              Save
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-dialog>
+    
+   
+      </v-col>
+    
+   
+      
+    </v-row>
+
+
+
+</div>
+
+ </v-img>
 </template>
 
-<script type="text/javascript" src="xml2json.js"></script>
 <script>
-import axios from 'axios';
+import HomeHeaders from './HomeHeaders.vue'
+import firebase from 'firebase/compat/app';
 
-  export default {
-    data:()=>({
-      search:'',
-      selectedItem: null,
-      isVisible: false,
-      destination:[],
-      destPlace:''
-      
+
+export default {
+  data: () => ({
+    user:null,
+    dialog: false,
+    items: [
+          { title: 'Profile', icon: 'mdi-account', to: "/profilepage" },
+          { title: 'Login Details', icon: 'mdi-login' },
+          { title: 'Payments', icon: 'mdi-account-credit-card' },
+         { title: 'Settings', icon: 'mdi-account-cog' },
+          { title: 'Logout', icon: 'mdi-logout' , to: "/login"},
+        ],
+        gender: ['Male','Female'],
+        marital: ['Single','Married'],
+        picker: (new Date(Date.now() - (new Date()).getTimezoneOffset() * 60000)).toISOString().substr(0, 10),
+    right: null,
+    
     }),
+    created() {
+       firebase.auth().onAuthStateChanged(user => {
+           if (user) {
+               this.user = user;
+           }
+       });
+   },
+ components:{
+  HomeHeaders
+ },
+ methods:{
+  created() {
+        firebase.auth().onAuthStateChanged(user => {
+            if (user) {
+                this.user = user;
+            }
+        });
+    },
 
-    computed: {
-        filterDestination(){
-          return this.destination.filter(place => {
-            return place.country.toLowerCase().includes(this.search.trim().toLowerCase()) || 
-               place.destination.toLowerCase().includes(this.search.trim().toLowerCase());
-      });
-        } 
-      },
-      
-    mounted() {
-      this.SelectDestination()
-        },
-
-      methods:{
-        selectItem(place){
-          this.selectedItem = place.country ;
-          this.destPlace = place.destination;
-          console.log(this.selectedItem);
-          this.isVisible = false;
-        },
-        SelectDestination(search){
-          console.log('response.status');
-          console.log(search);
-          axios.post("http://192.168.1.40:8991/api/city/page",{
-              "off": 0,
-              "on" :5,
-              "keyword": this.search
-          })
-          .then((response)=>{
-                console.log(response.status);
-                console.log(response.data);
-                this.dest = response.data;
-                this.destination = [...new Set(this.dest)]
-                console.log("this.destination")
-                console.log(this.destination)
-          }).catch((error)=>{
-                console.log(error.response);
-          });
-      },
-        getDestination(){
-          const IPAddress = localStorage.getItem('IPAddress');
-          console.log(IPAddress)
-          axios.post("http://192.168.1.40:8991/api/city/top-destinations",{
-            // params:{
-              "EndUserIp" : "103.85.206.4"
-            // }
-          })
-          .then((response)=>{
-                console.log(response.status);
-                console.log(response.data.TopDestination);
-                var xmlstr = response.data.TopDestination;
-                // this.des = xml2json.fromStr(xmlstr);
-                this.des = xmlstr;
-                console.log('ok');
-            
-          }).catch((error)=>{
-              console.log(error.response);
-        
-          });
-        },
-        getIpAddress () {
-            fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(response => {
-              this.clientIp = response.ip;
-              localStorage.setItem('IPAddress',response.ip)
-              // console.log(this.clientIp)
-            });                  
-          },
-      }
-  }
+ }
+}
 </script>
-
-<style scoped lang="scss">
-.dropdown-wrapper{
-  max-width: 350px;
-  position: relative;
-  margin: 0 auto;
-}
-
-.selected-item{
-  height: 40px;
-  border: 2px solid lightgray;
-  border-radius: 5px;
-  padding: 5px 10px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  font-size: 18px;
-  font-weight: 400;
-}
-
-.dropdown-popover{
-  position: absolute;
-  border: 2px solid lightgrey;
-  top: 46px;
-  left :0;
-  right: 0;
-  background-color: #fff;
-  max-width: 100%;
-  padding: 10px;
-
-  input{
-    width: 100%;
-    height: 50px;
-    border: 2px solid lightgray;
-    font-size: 16px;
-    padding-left: 8px;
-  }
-
-  .options{
-    width: 100%;
-
-    ul{
-      list-style: none;
-      text-align: left;
-      padding-left: 8px;
-      max-height: 200px;
-      overflow-y: scroll;
-      overflow-x: hidden;
-      border: 1px solid lightgray;
-
-      li{
-        width: 100%;
-        border-bottom: 1px solid lightgray;
-        padding: 10px;
-        background-color: #f1f1f1;
-        cursor: pointer;
-        font-size: 16px;
-        &:hover {
-          background: #70878a;
-          color: #fff;
-          font-weight: bold;
-        }
-      }
-    }
-  }
-}
-
-</style>

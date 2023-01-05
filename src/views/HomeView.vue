@@ -1,45 +1,26 @@
 <template>
-  <div class="home">
-    <header-page/>
-    <welcome-page/>
-    <!-- <icons-page></icons-page> -->
-    <trending-offer/>
-    <br>
-    <br>
-    <top-destination/>
-    <br>
-    <br>
-    <download-enjoy/>
-    <br>
-    <br>
-    <footer-page/>
-    <br>
-    <contact-info/>
+  <div>
+  <home-headers></home-headers>
+  <home-tabs></home-tabs>
+  <home-trends></home-trends>
+  <home-destination></home-destination>
+
+  <home-container></home-container>
   
-  </div>
+  <home-footer></home-footer>
+</div>
 </template>
 
 <script>
-import WelcomePage from '@/components/WelcomePage.vue';
-import HeaderPage from '../components/HeaderPage.vue';
-import TrendingOffer from '@/components/TrendingOffer.vue';
-import TopDestination from '@/components/TopDestination.vue';
-import DownloadEnjoy from '@/components/DownloadEnjoy.vue';
-import ContactInfo from '@/components/ContactInfo.vue';
-import FooterPage from '@/components/FooterPage.vue';
-import IconsPage from '../components/icons/IconsPage.vue';
+import HomeHeaders from '../components/HomeHeaders.vue';
+import HomeTabs from '../components/HomeTabs.vue';
+import HomeTrends from '../components/HomeTrends.vue';
+import HomeDestination from '../components/HomeDestination.vue';
+import HomeContainer from '../components/HomeContainer.vue';
+import HomeFooter from '../components/HomeFooter.vue';
 
 export default {
-  name: 'HomeView',
-  components: {
-    HeaderPage,
-    WelcomePage,
-    TrendingOffer,
-    TopDestination,
-    DownloadEnjoy,
-    ContactInfo,
-    FooterPage,
-    IconsPage
+  components: {HomeHeaders,HomeTrends,HomeTabs,HomeDestination,HomeFooter,HomeContainer}
 }
-}
+
 </script>
