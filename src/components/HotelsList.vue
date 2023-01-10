@@ -1,30 +1,206 @@
 <template>
     <div>
     <home-headers></home-headers>
-        <h1>Hotel Details</h1>
-        <v-data-table
-        :headers="headers"
-        :items="hotels"
-        hide-default-footer
-        class="elevation-5 ml-14 mr-14"
-      >
-      <template v-slot:[`item.HotelPicture`]="{ item }">
-       <v-card height="250">
-        <div class="p-7">
-          <v-img :src="item.HotelPicture" :alt="item.name" height="250px"></v-img>
+    <v-container>
+      <v-dialog
+      content-class="elevation-0"
+      v-model="isLoggingIn"
+      persistent
+      width="600"
+    >
+  <!-- <v-card
+
+  >
+    <v-card-text> -->
+      <v-img src="loadingHotel.gif"></v-img>
+    <!-- </v-card-text>
+  </v-card> -->
+</v-dialog>
+      <v-app id="">
+      <v-row> 
+        <v-col>
+          <v-card width="300">
+            <v-card-text class="black--text">
+              <h3>HOTEL NAME </h3>   
+              <v-col cols="11">
+              <v-text-field
+              v-model="search"
+              append-icon="mdi-magnify"
+              label="Search hotel name"
+              color="purple"
+              outlined
+              hide-details
+              ></v-text-field></v-col>
+            </v-card-text>
+            <v-card-text class="black--text">
+              <h3>STAR RATING</h3>
+                  <v-col cols="12">
+                    <v-row align="center">
+                    <v-checkbox 
+                    v-model="selected5"
+                    color="purple"
+                  ></v-checkbox>
+                  <v-rating
+                    color="yellow darken-3"
+                    background-color="grey darken-1"
+                    readonly
+                    value="5"
+                    
+                  ></v-rating>
+                  <v-col cols="12">
+                    <v-row align="center">
+                      <v-checkbox 
+                    v-model="selected4"
+                    color="purple"
+                  ></v-checkbox>
+                  <v-rating
+                    color="yellow darken-3"
+                    background-color="grey darken-1"
+                    empty-icon="$ratingFull"
+                    half-increments
+                    readonly
+                    value="4"
+                  ></v-rating>
+                </v-row></v-col>
+                  <v-col cols="12">
+                    <v-row align="center">
+                      <v-checkbox 
+                    v-model="selected3"
+                    color="purple"
+                  ></v-checkbox>
+                  <v-rating
+                    color="yellow darken-3"
+                    background-color="grey darken-1"
+                    empty-icon="$ratingFull"
+                    half-increments
+                    readonly
+                    value="3"
+                  ></v-rating>
+                </v-row></v-col>
+                  <v-col cols="12">
+                    <v-row align="center">
+                      <v-checkbox 
+                    v-model="selected2"
+                    color="purple"
+                  ></v-checkbox>
+                  <v-rating
+                    color="yellow darken-3"
+                    background-color="grey darken-1"
+                    empty-icon="$ratingFull"
+                    half-increments
+                    readonly
+                    value="2"
+                  ></v-rating>
+                  <v-col cols="12">
+                    <v-row align="center">
+                      <v-checkbox 
+                    v-model="selected1"
+                    color="purple"
+                  ></v-checkbox>
+                  <v-rating
+                    color="yellow darken-3"
+                    background-color="grey darken-1"
+                    empty-icon="$ratingFull"
+                    half-increments
+                    readonly
+                    value="1"
+                  ></v-rating>
+                </v-row></v-col>
+                  </v-row>
+                  </v-col>
+                  </v-row></v-col>
+                  </v-card-text>
+
+                  <v-card-text class="black--text">
+                    <h3>PRICE RANGE</h3>
+                  </v-card-text>
+                  <v-card-text>
+                    <v-row>
+                      <v-col class="px-4">
+                        <v-range-slider
+                          v-model="range"
+                          :max="max"
+                          :min="min"
+                          hide-details
+                          class="align-center"
+                          color="purple"
+                        >
+                          <template v-slot:prepend>
+                            <v-text-field
+                              color="purple"
+                              :value="range[0]"
+                              class="mt-0 pt-0"
+                              hide-details
+                              single-line
+                              type="number"
+                              style="width: 60px"
+                              @change="$set(range, 0, $event)"
+                            ></v-text-field>
+                          </template>
+                          <template v-slot:append>
+                            <v-text-field
+                              :value="range[1]"
+                              class="mt-0 pt-0"
+                              hide-details
+                              single-line
+                              type="number"
+                              style="width: 60px"
+                              @change="$set(range, 1, $event)"
+                            ></v-text-field>
+                          </template>
+                        </v-range-slider>
+                      </v-col>
+                    </v-row>
+                  </v-card-text>
+                  </v-card>
+      </v-col>
+     
+      <v-col cols="8">
+        <v-list v-for="(hotel,index) in filteredItems" :key="index" v-if="index < commentsToShow">
+  
+      <div class="searchItem">
+       
+        <v-img :src="hotel.HotelPicture" :alt="hotel.name" class="Img"></v-img>
+        <div class="Desc">
+          <h1 class="Title">{{hotel.HotelName}}</h1>
+          <span class="Distance">Distance</span>
+          <span class="TaxiOp">Service Charge :{{hotel.Price.ServiceCharge}}</span>
+          <span class="Subtitle">Description{{hotel.HotelDescription}}</span>
+          <span class="Features">Features</span>
+          <span class="CancelOp">CancelOp</span>
+          <span class="CancelOpSubtitle">CancelOpSubtitle</span>
         </div>
-       </v-card>
-    </template>
-      <template v-slot:[`item.StarRating`]="{ item }">
-        <v-rating
-        color="yellow"
-        background-color="black"
-        
-        v-model="item.StarRating">
-      </v-rating>
-    </template>
-    </v-data-table>
-    
+        <div class="Details">
+             
+          <v-rating
+            v-model="hotel.StarRating"
+            color="yellow darken-3"
+            background-color="grey darken-1"
+            empty-icon="$ratingFull"
+            half-increments
+            readonly
+          ></v-rating>
+          <div class="DetailTexts">
+            <span class="Price"><v-icon color="purple">mdi-currency-rupee</v-icon>{{hotel.Price.RoomPrice}}</span>
+            <span class="Taxiop">+ <v-icon size="13">mdi-currency-rupee</v-icon>{{hotel.Price.OtherCharges}} taxes and charges</span>
+          </div>
+          <div class="DetailTexts">
+            <!-- <span class="Price"><v-icon color="purple">mdi-currency-rupee</v-icon>{{hotel.Price.RoomPrice}}</span> -->
+            <!-- <span class="Taxiop">+ {{hotel.Price.OtherCharges}} taxes and fees</span> -->
+            <button class="CheckButton" type="Submit" :disabled="dialog"
+            :loading="isLoggingIn" @click="getSelectedData(hotel)">See Availability</button>
+          </div>
+        </div>
+      </div>
+      </v-list>
+        <v-col class="text-center">
+          <v-btn color="purple" text @click="commentsToShow += 20">load more ....</v-btn>
+        </v-col>
+        </v-col>
+       </v-row>
+      </v-app>
+      </v-container>
+
     </div>
    
 </template>
@@ -32,37 +208,222 @@
 <script>
 
 import HomeHeaders from './HomeHeaders.vue'
-
+import axios from 'axios'
 
 
 export default{
-    data()
-    {
-        return{
-          headers: [
+    data:()=> ({
+          header: [
           {text: 'Hotel Name',align: 'start',sortable: false,value: 'HotelName',},
           {text: 'Hotel Image',value: 'HotelPicture',},
           { text: 'Hotel rating', value: 'StarRating' },  
           { text: 'Price', value: 'Price.RoomPrice' },
           { text: 'Hotel Address', value: 'HotelAddress' },
-          
-          
-        ],
+         ],
+        min: 1000,
+        max: 30000,
+        range: [5000, 25000],
+        isLoggingIn: false,
         hotels:[],
-        items:[],    
+        items:[],
+        search:'',
+        selected5:'',  
+        selected4:'',
+        selected3:'',  
+        selected2:'',  
+        selected1:'',  
+        HotelCode:'',
+        ResultIndex:'',
+        commentsToShow: 10,
+        hotelDetails:'',
+        selected: '1',
+        dialog: false,
+      }),
+    computed:{
+          filteredItems() {
+            console.log('filter')
+            console.log(this.search);
+            console.log(this.range)    
+            return this.hotels.filter(hotel => {
+                return hotel.HotelName.toLowerCase().includes(this.search.trim().toLowerCase()) ||
+                 hotel.Price.RoomPrice > this.range[0] && hotel.Price.RoomPrice < this.range[1];
+            });
         }
-    },
+      },
     created() {
           this.hotels = JSON.parse(localStorage.getItem("Items") || '[]')
+          console.log('dgdfh');
+          console.log(this.hotels);
         },
     methods:{
-     
-     
-      
+      getSelectedData(hotel){
+          this.isLoggingIn = true;
+          const IPAddress = localStorage.getItem('IPAddress');
+          console.log(IPAddress);
+          const TraceId = localStorage.getItem('TraceId');
+          console.log(TraceId);
+          const Token = localStorage.getItem('Token');
+          console.log(Token);
+          this.ResultIndex = hotel.ResultIndex;
+          this.HotelCode = hotel.HotelCode;
+          localStorage.setItem('ResultIndex',this.ResultIndex);
+          localStorage.setItem('HotelCode',this.HotelCode);
+          localStorage.setItem('Categoryid',hotel.SupplierHotelCodes[0].CategoryId);
+          this.Categoryid = hotel.SupplierHotelCodes[0].CategoryId;
+          this.Categoryindex = hotel.SupplierHotelCodes[0].CategoryIndex;
+          localStorage.setItem('Categoryindex',this.Categoryindex);
+          console.log(this.Categoryindex);
+          console.log(this.HotelCode);
+          console.log(this.ResultIndex);
+          console.log(this.Categoryid);
+          axios.post(this.$hostname + 'api/hotels/hotel-info',{
+            // params:
+            // {
+              "HotelCode": this.HotelCode,
+              "ResultIndex": this.ResultIndex,
+              "TraceId": TraceId,
+              "TokenId": Token,
+              "EndUserIp": IPAddress,
+              "CategoryId": this.Categoryid
+          // }
+          }).then((response)=>{
+              console.log(response.status);
+              console.log(response.data);
+              this.$router.push("/hoteldetails");
+              this.hotelDetails = response.data.HotelInfoResult.HotelDetails;
+              console.log(this.hotelDetails);
+              
+              localStorage.setItem('HotelDetails',JSON.stringify(this.hotelDetails));
+              }).catch((error)=>{
+                  alert( error)
+              console.log(error);
+            }) 
+
+          },
     },
    
     components: {
       HomeHeaders,
     },
-}
+  }
+
 </script>
+
+<style scoped>
+
+.my-span {
+  /* background-color: blue;
+  color: white;
+  font-weight: bold; */
+  /* margin-right: 0; */
+  /* float: center; */
+  align-content: center;
+}
+
+.searchItem{
+  border: 1px solid lightgrey;
+  padding: 10px;
+  border-radius: 15px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.Img{
+  /* width: 180px;
+  height: 200px; */
+  object-fit: cover;
+}
+
+.Desc{
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex: 2;
+}
+
+.Title{
+  font-size: 20px;
+  color: #92278f;
+}
+
+.TaxiOp{
+  font-size: 12px;
+  background-color: #008009;
+  color: white;
+  width: max-content;
+  padding: 3px;
+  border-radius: 5px;
+}
+
+.Subtitle{
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.Features{
+  font-size: 12px;
+}
+
+.CancelOp{
+  font-size: 12px;
+  color: #f80000;
+  font-weight: bold;
+}
+
+.CancelOpSubtitle{
+  font-size: 12px;
+  color: #ff7700;
+}
+
+.Details{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.Rating{
+  display: flex;
+  justify-content: space-between;
+}
+
+.Rating span{
+  font-weight: 500;
+}
+
+.Rating button{
+  background-color: #003580;
+  color: white;
+  padding: 5px;
+  font-weight: bold;
+  border: none;
+}
+
+.DetailTexts{
+  text-align: right;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.Price{
+  font-size: 20px;
+}
+
+.Taxiop{
+  font-size: 12px;
+  color: gray;
+}
+
+.CheckButton{
+  background-color: #92278f;
+  color: white;
+  font-weight: bold;
+  padding: 10px 5px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+</style>
