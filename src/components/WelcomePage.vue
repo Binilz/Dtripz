@@ -30,16 +30,16 @@
       <div class="tabs"> 
         <div class="nav-tabs">
           <div class="nav-item" @click="setActive('tab-1')" :class="{ 'active' : isActive('tab-1') }">
-            <v-icon color="white">mdi-home-city</v-icon><strong>Hotels</strong>  
+            <v-icon class="nav-icon" >mdi-home-city</v-icon><strong class="nav-icon">Hotels</strong>  
             <!-- <v-avatar><img
         src="hotel2.png"></v-avatar> -->
           
           </div>
           <div class="nav-item"  @click="setActive('tab-2')" :class="{ 'active' : isActive('tab-2') }">
-            <v-icon color="white">mdi-airplane</v-icon>
+            <v-icon class="nav-icon">mdi-airplane</v-icon><strong class="nav-icon">Flights</strong>
             <!-- <v-avatar><img
         src="icons/airplane1.png"></v-avatar> -->
-         <strong>Flights</strong>  
+         
           </div>
           <!-- <v-spacer></v-spacer>
           <v-btn class="search" text><v-icon>mdi-magnify</v-icon><span>Search</span></v-btn> -->
@@ -209,7 +209,7 @@ background-size: cover;
   justify-content: center;
 }
 
-.active{
+.active .nav-icon {
   /* color: rgb(0, 0, 0); */
   color: white;
   /* background-color:#ece8ed; */

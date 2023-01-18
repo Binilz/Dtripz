@@ -37,8 +37,9 @@
                   <v-col cols="12">
                     <v-row align="center">
                     <v-checkbox 
-                    v-model="selected5"
+                    v-model="selected"
                     color="purple"
+                    value="5"
                   ></v-checkbox>
                   <v-rating
                     color="yellow darken-3"
@@ -50,7 +51,8 @@
                   <v-col cols="12">
                     <v-row align="center">
                       <v-checkbox 
-                    v-model="selected4"
+                    v-model="selected"
+                    value="4"
                     color="purple"
                   ></v-checkbox>
                   <v-rating
@@ -65,8 +67,9 @@
                   <v-col cols="12">
                     <v-row align="center">
                       <v-checkbox 
-                    v-model="selected3"
+                    v-model="selected"
                     color="purple"
+                    value="3"
                   ></v-checkbox>
                   <v-rating
                     color="yellow darken-3"
@@ -80,8 +83,9 @@
                   <v-col cols="12">
                     <v-row align="center">
                       <v-checkbox 
-                    v-model="selected2"
+                    v-model="selected"
                     color="purple"
+                    value="2"
                   ></v-checkbox>
                   <v-rating
                     color="yellow darken-3"
@@ -94,8 +98,9 @@
                   <v-col cols="12">
                     <v-row align="center">
                       <v-checkbox 
-                    v-model="selected1"
+                    v-model="selected"
                     color="purple"
+                    value="1"
                   ></v-checkbox>
                   <v-rating
                     color="yellow darken-3"
@@ -194,7 +199,10 @@
       </div>
       </v-list>
         <v-col class="text-center">
-          <v-btn color="purple" text @click="commentsToShow += 20">load more ....</v-btn>
+          <v-btn color="purple" text v-if="filteredItems.length >10" @click="commentsToShow += 10">load more ....</v-btn>
+            <div v-if="filteredItems.length === 0">
+              <v-img src="https://cdn.dribbble.com/users/2382015/screenshots/6065978/no_result.gif"></v-img>
+            </div>
         </v-col>
         </v-col>
        </v-row>
@@ -227,26 +235,21 @@ export default{
         hotels:[],
         items:[],
         search:'',
-        selected5:'',  
-        selected4:'',
-        selected3:'',  
-        selected2:'',  
-        selected1:'',  
+        selected: '3',
         HotelCode:'',
         ResultIndex:'',
         commentsToShow: 10,
         hotelDetails:'',
-        selected: '1',
         dialog: false,
+        commentsToShow: 10,
       }),
     computed:{
-          filteredItems() {
-            console.log('filter')
+      filteredItems() {
             console.log(this.search);
-            console.log(this.range)    
-            return this.hotels.filter(hotel => {
-                return hotel.HotelName.toLowerCase().includes(this.search.trim().toLowerCase()) ||
-                 hotel.Price.RoomPrice > this.range[0] && hotel.Price.RoomPrice < this.range[1];
+            console.log(this.range)
+              return this.hotels.filter(hotel => {
+              return hotel.HotelName.toLowerCase().includes(this.search.trim().toLowerCase()) &&
+                hotel.StarRating == this.selected
             });
         }
       },

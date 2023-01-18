@@ -124,6 +124,7 @@
                     <v-checkbox
                     v-model="selected"
                     color="purple"
+                    value="5"
                   ></v-checkbox>
                   <v-rating
                   color="yellow darken-3"
@@ -257,7 +258,7 @@ import HotelDetails from './HotelDetails.vue';
      data: () => ({ 
       dialoghotel: false,
       search: '',
-      selected: '',
+      selected: '1',
       HotelCode:'',
       ResultIndex:'',
       Categoryid:'',
