@@ -161,11 +161,14 @@
       </v-col>
      
       <v-col cols="8">
+        <h2> {{ filteredItems.length }} properties found</h2>
         <v-list v-for="(hotel,index) in filteredItems" :key="index" v-if="index < commentsToShow">
   
       <div class="searchItem">
-       
-        <v-img :src="hotel.HotelPicture" :alt="hotel.name" class="Img"></v-img>
+        <v-card class="mx-auto"
+        outlined>
+        <v-img :src="hotel.HotelPicture" :alt="hotel.name" height="200px" width="180px"></v-img>
+       </v-card>
         <div class="Desc">
           <h1 class="Title">{{hotel.HotelName}}</h1>
           <span class="Distance">Distance</span>
@@ -230,7 +233,7 @@ export default{
          ],
         min: 1000,
         max: 30000,
-        range: [5000, 25000],
+        range: [500, 25000],
         isLoggingIn: false,
         hotels:[],
         items:[],
@@ -242,6 +245,7 @@ export default{
         hotelDetails:'',
         dialog: false,
         commentsToShow: 10,
+        Categoryid:''
       }),
     computed:{
       filteredItems() {
@@ -249,7 +253,8 @@ export default{
             console.log(this.range)
               return this.hotels.filter(hotel => {
               return hotel.HotelName.toLowerCase().includes(this.search.trim().toLowerCase()) &&
-                hotel.StarRating == this.selected
+              hotel.StarRating == this.selected &&
+                hotel.Price.RoomPrice > this.range[0] && hotel.Price.RoomPrice < this.range[1];
             });
         }
       },
@@ -261,24 +266,15 @@ export default{
     methods:{
       getSelectedData(hotel){
           this.isLoggingIn = true;
-          const IPAddress = localStorage.getItem('IPAddress');
-          console.log(IPAddress);
-          const TraceId = localStorage.getItem('TraceId');
-          console.log(TraceId);
-          const Token = localStorage.getItem('Token');
-          console.log(Token);
-          this.ResultIndex = hotel.ResultIndex;
-          this.HotelCode = hotel.HotelCode;
-          localStorage.setItem('ResultIndex',this.ResultIndex);
-          localStorage.setItem('HotelCode',this.HotelCode);
-          localStorage.setItem('Categoryid',hotel.SupplierHotelCodes[0].CategoryId);
-          this.Categoryid = hotel.SupplierHotelCodes[0].CategoryId;
-          this.Categoryindex = hotel.SupplierHotelCodes[0].CategoryIndex;
-          localStorage.setItem('Categoryindex',this.Categoryindex);
-          console.log(this.Categoryindex);
-          console.log(this.HotelCode);
-          console.log(this.ResultIndex);
-          console.log(this.Categoryid);
+         const IPAddress = localStorage.getItem('IPAddress');
+         const TraceId = localStorage.getItem('TraceId');
+         const Token = localStorage.getItem('Token');
+         this.ResultIndex = hotel.ResultIndex;
+         localStorage.setItem('ResultIndex',this.ResultIndex)
+         this.Categoryid = hotel.SupplierHotelCodes[0].CategoryId;
+         localStorage.setItem('Categoryid',this.Categoryid)
+         this.HotelCode = hotel.HotelCode;
+         localStorage.setItem('HotelCode',this.HotelCode)
           axios.post(this.$hostname + 'api/hotels/hotel-info',{
             // params:
             // {
@@ -292,6 +288,7 @@ export default{
           }).then((response)=>{
               console.log(response.status);
               console.log(response.data);
+              console.log('hahah')
               this.$router.push("/hoteldetails");
               this.hotelDetails = response.data.HotelInfoResult.HotelDetails;
               console.log(this.hotelDetails);
