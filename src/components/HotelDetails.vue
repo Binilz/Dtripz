@@ -108,6 +108,106 @@
       </template>
       </v-card>
       </v-dialog>
+      <v-dialog 
+      v-model="clickImg"
+      max-width="1200px" 
+      class="overflow-y-hidden">
+      <v-card
+        height="800px"
+        class="mx-auto"
+        max-width="1200px"
+      >
+      <br>
+      <v-app-bar
+                absolute
+                color="white"
+                elevate-on-scroll
+                scroll-target="#scrolling-techniques-7"
+                flat
+              >
+            
+                <!-- <v-layout flat class="justify-center"> -->
+                  <div class="justify-center ml-16">
+                    <v-row><v-btn text @click="clickImg = false"><v-icon>mdi-arrow-left</v-icon> Gallery</v-btn></v-row>
+                  </div>
+                  <v-spacer></v-spacer>
+                  <div>
+                      <v-row align="center" justify="right">
+                      <v-card-title>
+                        <h4>{{ HotelName }}</h4>
+                      </v-card-title>
+                      <v-rating 
+                        :value="Rating"
+                        color="amber"
+                        dense background-color="grey darken-1"
+                        half-increments
+                        readonly
+                        size="20"
+                      ></v-rating>
+                      &nbsp; <v-btn color="purple" dark @click="reserve"> Reserve Now</v-btn>
+                      <!-- <v-btn class="text-right" color="blue darken-1" text @click="seemore = false" >Close</v-btn> -->
+                    </v-row>
+                  </div>
+                  <!-- </div> -->
+                  <v-spacer></v-spacer>
+                  <div class="justify-right">
+                    <v-btn class="text-right" text @click="seemore = false, clickImg = false" ><v-icon>mdi-close</v-icon></v-btn>
+                  </div>
+                <!-- </v-layout> -->
+              </v-app-bar>
+
+        <v-row> 
+         <v-col class="mx-auto" align-self="center">
+          <v-hover v-slot="{ hover }">
+            <div
+                :elevation="hover ? 12 : 2"
+                :class="{ 'on-hover': hover }"
+              >
+              <v-btn x-large icon color="grey"><v-icon size="75" class="grey--text" :class="{ 'show-btns': hover }" icon>mdi-chevron-left</v-icon></v-btn>
+            </div>
+          </v-hover>
+        </v-col>
+         <v-spacer></v-spacer>
+        <v-col>
+         <v-card class="mx-auto" max-width="800px">
+          <v-img :src="Img"  height="600px"></v-img>
+         </v-card>
+        </v-col>
+         <v-spacer></v-spacer>
+        <v-col class="text-right" align-self="center">
+          <v-hover v-slot="{ hover }">
+            <div
+                :elevation="hover ? 12 : 2"
+                :class="{ 'on-hover': hover }"
+              >
+              <v-btn x-large icon color="grey"><v-icon size="75" class="grey--text" :class="{ 'show-btns': hover }" icon>mdi-chevron-right</v-icon></v-btn>
+            </div>
+          </v-hover>
+        </v-col>
+         <br> 
+        <v-card class="mx-auto" max-width="1000px">
+          <v-row>
+            <v-col
+              v-for="(card, index) in slides"
+              :key="index"
+              :cols="2"
+              v-if="index < 6"
+            >
+              <v-card class="d-flex" @click="click(card)">
+                <v-img
+                  :src="card"
+                  class="white--text align-end"
+                  
+                  height="100px"
+                >
+                </v-img>
+              </v-card>
+            </v-col>
+          </v-row>
+            </v-card>
+          </v-row>
+          </v-card>
+    </v-dialog>
   
     <v-card
         :loading="loading"
@@ -255,6 +355,10 @@ export default{
       HotelFacilities:[],
       isLoggingIn: false,
       dialog: false,
+      RoomsDetails:'',
+      clickImg: false,
+      Images:'',
+      Img:'',
 
     }),
     created() {
@@ -270,6 +374,7 @@ export default{
           this.longitude = this.hotelDetails.Longitude;
           console.log(this.longitude);
           this.slides= this.hotelDetails.Images;
+          this.Images= this.hotelDetails.Images[0];
           this.Description = this.hotelDetails.Description.replace(/<[^>]*>?/gm, '').replace(/\&nbsp;/g, '\n');
           this.HotelFacilities = this.hotelDetails.HotelFacilities;
 },
@@ -303,10 +408,20 @@ methods:{
           }).then((response)=>{
               console.log(response.status);
               console.log(response.data);
-              console.log('hurray')
+              this.RoomsDetails = response.data.GetHotelRoomResult.HotelRoomsDetails;
+              localStorage.setItem('RoomsDetails',JSON.stringify(this.RoomsDetails));
               this.$router.push("/hotelroom");
-          })
-}
+            }).catch((error)=>{
+                 
+                
+              console.log(error);
+            }) 
+},
+click(card){
+          console.log(card);
+          this.Img = card;
+          this.clickImg = true;
+        },
 }
 }
 </script>
