@@ -10,6 +10,8 @@ import LoginDetails from '../components/LoginDetails'
 import HotelDetails from '../components/HotelDetails'
 import HotelRoom from '../components/hotel/HotelRoom'
 import ProPic from '../components/ProPic'
+import SearchSearch from '../components/hotel/SearchSearch.vue'
+
 
 Vue.use(VueRouter)
 
@@ -71,6 +73,11 @@ const routes = [
     path: '/propic',
     name: 'propic',
     component: ProPic
+  },
+  {
+    path: '/searchsearch',
+    name: 'searchsearch',
+    component: SearchSearch
   },
 ]
 

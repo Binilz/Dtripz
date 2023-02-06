@@ -19,7 +19,15 @@
       <v-app id="">
       <v-row> 
         <v-col>
-          <v-card width="300">
+          <v-card width="300" class="mx-auto" color="blue lighten-1">
+           
+            <v-card-text class="black--text">
+             <h3>Search</h3> 
+            </v-card-text>
+          <search-search/>
+        </v-card>
+        <br>
+          <v-card width="300" class="mx-auto">
             <v-card-text class="black--text">
               <h3>HOTEL NAME </h3>   
               <v-col cols="11">
@@ -220,7 +228,7 @@
 
 import HomeHeaders from './HomeHeaders.vue'
 import axios from 'axios'
-
+import SearchSearch from '../components/hotel/SearchSearch'
 
 export default{
     data:()=> ({
@@ -303,7 +311,7 @@ export default{
     },
    
     components: {
-      HomeHeaders,
+      HomeHeaders,SearchSearch
     },
   }
 
