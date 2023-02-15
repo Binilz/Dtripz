@@ -9,10 +9,10 @@
      <div class="border align-center" >
       <div class="nav-tabs mt-8">
         <div class="nav-item" @click="setActive('tab-1')" :class="{ 'active' : isActive('tab-1') }">
-          <v-icon color="white">mdi-home-city</v-icon>Hotels
+          <v-icon class="icons">mdi-home-city</v-icon><strong class="icons">Hotels</strong> 
       </div>
       <div class="nav-item"  @click="setActive('tab-2')" :class="{ 'active' : isActive('tab-2') }">
-        <v-icon color="white">mdi-airplane</v-icon>Flights
+        <v-icon class="icons">mdi-airplane</v-icon><strong class="icons">Flights</strong>
       </div>
       
     </div>
@@ -70,6 +70,8 @@ export default{
   height: 40%;
   width: 120;
   background-color: #3e154e;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
 
 .border{
@@ -80,27 +82,43 @@ export default{
 
 
 .tabs{
-  width:1700px;
+  /* width: 1200px; */
   margin: 0 auto;
   color:"#3e154e";
-  
-  
-
+  justify-content: center;
 }
+
 .nav-tabs{
   display: flex;
-  height:70px;
-  width: 300px;
-  margin: 0 auto;
-  align-items: center;
-  justify-content: center;
-  border-style: solid;
-  border-width: 3px;
   border-radius: 70px;
   border-color: #f04e6e;
-  
+  border-style: solid;
+  border-width: 1px;
+  width: 300px;
+  height: 60px;
   background-color: #92278f;
+  /* width: 950px; */
+  margin: 0 auto;
+  position:100 ;
+  justify-content: center;
+}
 
+.nav-item{
+  color:black;
+  transition: all 150ms;
+  cursor: pointer;
+  /* background-color:#3e154e; */
+  /* height: 80px; */
+  height: 60px;
+  width: 150px;
+  /* width: 14.5%; */
+  font-weight: 300;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border-top-left-radius: 6px ;
+  border-top-right-radius: 6px;
 }
 #main-nav a {
   text-transform: uppercase;
@@ -114,21 +132,7 @@ export default{
   background-color: #2c3e50;
   border: 1px solid #333;
 }
-.nav-item{
-  color: rgb(0, 0, 0);
-  transition: all 150ms;
-  cursor: pointer;
-  height: 100px;
-  width: 150px;
-  font-weight: 500;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-  border-radius: 40px;
-  
 
-}
 
 .tab-content{
   border: solid 3px rgb(200, 53, 205);
@@ -141,7 +145,7 @@ export default{
   color: purple;
 }
 
-.active{
+.active .icons{
   color: white;
   align-items: center;
   justify-content: center;

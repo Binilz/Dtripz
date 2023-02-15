@@ -271,8 +271,8 @@ export default {
     } ,
       doubleValue: {
           get(){
-            console.log(this.date1),
-            localStorage.setItem('CheckIn',this.date1);
+            localStorage.setItem('CheckOut',this.date[0]);
+            localStorage.setItem('CheckIn',this.date[1]);
             localStorage.setItem('DateDiff',Math.floor((Date.parse(this.date2) - Date.parse(this.date1)) / 86400000));
             localStorage.setItem('YourItems',this.items)
             this.diff = Math.floor((Date.parse(this.dates[1]) - Date.parse(this.dates[0])) / 86400000);

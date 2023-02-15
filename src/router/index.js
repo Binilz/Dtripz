@@ -11,7 +11,7 @@ import HotelDetails from '../components/HotelDetails'
 import HotelRoom from '../components/hotel/HotelRoom'
 import ProPic from '../components/ProPic'
 import SearchSearch from '../components/hotel/SearchSearch.vue'
-
+import PassengerDetails from '../components/hotel/PassengerDetails'
 
 Vue.use(VueRouter)
 
@@ -63,6 +63,11 @@ const routes = [
     path: '/hoteldetails',
     name: 'hoteldetails',
     component: HotelDetails
+  },
+  {
+    path: '/passengerdetails',
+    name: 'passengerdetails',
+    component: PassengerDetails
   },
   {
     path: '/hotelroom',
